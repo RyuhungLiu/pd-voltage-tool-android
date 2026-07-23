@@ -1,0 +1,18 @@
+.gradle/
+.idea/
+**/build/
+local.properties
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Local reference and release secrets
+Web/
+UI_AND_FEATURE_ROADMAP.md
+release-signing/
+dist/
+*.jks
+*.keystore
+keystore.properties
+

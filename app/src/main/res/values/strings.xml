@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="app_name">PD 電壓工具</string>
+    <string name="title">PD 電壓工具</string>
+    <string name="subtitle">USB HID 控制版 · v0.3.0</string>
+    <string name="tab_control">調壓</string>
+    <string name="tab_system">系統</string>
+    <string name="tab_tools">工具</string>
+
+    <string name="connection_status">設備狀態</string>
+    <string name="no_usb_device">未連接 PD 設備</string>
+    <string name="connect_hint">請通過 OTG 連接 PD Std 或 PD Nano。</string>
+    <string name="supported_device_found">已發現 %1$d 個支持的 PD 設備</string>
+    <string name="usb_devices_found">發現 %1$d 個其他 USB 設備</string>
+    <string name="usb_permission_granted">USB 權限已授予</string>
+    <string name="usb_permission_denied">USB 權限被拒絕</string>
+    <string name="waiting_for_permission">等待 USB 授權…</string>
+    <string name="permission_yes">已授權</string>
+    <string name="permission_no">未授權</string>
+    <string name="unknown_usb_device">未知 USB 設備</string>
+    <string name="device_line">%1$s\nVID %2$04X · PID %3$04X\n接口 %4$d · %5$s</string>
+    <string name="supported_ids">支持：VID A016 · Std 0404 · Nano 0104</string>
+
+    <string name="current_preset">設備預設值</string>
+    <string name="voltage_value_empty">-- V</string>
+    <string name="current_value_empty">-- A</string>
+    <string name="mode_value_empty">--</string>
+    <string name="vbus_value_empty">--</string>
+    <string name="voltage_short">電壓</string>
+    <string name="current_short">電流限制</string>
+    <string name="mode_short">PD 模式</string>
+    <string name="vbus_short">VBUS</string>
+    <string name="preset_title">設定新的預設</string>
+    <string name="voltage_label">電壓（V）</string>
+    <string name="current_label">電流限制（A）</string>
+    <string name="voltage_hint">3–48V，步進 0.02V</string>
+    <string name="current_hint">0–10A，步進 0.1A</string>
+    <string name="quick_voltage">快捷電壓</string>
+    <string name="power_preview">預設功率上限：%1$s W</string>
+    <string name="apply">確認並應用</string>
+    <string name="query_status">同步設備狀態</string>
+    <string name="protocol_waiting">等待連接並讀取設備狀態。</string>
+    <string name="connecting_hid">正在連接 USB HID…</string>
+    <string name="querying_status">正在讀取設備狀態…</string>
+    <string name="status_synced">狀態已同步</string>
+    <string name="applying_preset">正在寫入電壓與電流配置…</string>
+    <string name="preset_applied">配置已應用並回讀確認</string>
+    <string name="protocol_error">HID 錯誤：%1$s</string>
+    <string name="invalid_voltage">請輸入 3–48V，並使用 0.02V 步進</string>
+    <string name="invalid_current">請輸入 0–10A，並使用 0.1A 步進</string>
+    <string name="confirm_apply_title">確認改變 PD 輸出？</string>
+    <string name="confirm_high_voltage_title">高電壓操作確認</string>
+    <string name="confirm_apply_message">設備將切換到 %1$s V，電流限制 %2$s A。請確認負載能承受此電壓。</string>
+
+    <string name="system_title">系統控制</string>
+    <string name="system_hint">修改先保留為草稿，點擊底部按鈕後才會發送。</string>
+    <string name="nano_locked">PD Nano 不支持 VBUS、ADC 與 Flash 存儲修改，相關項目已鎖定。</string>
+    <string name="vbus_control">VBUS 輸出</string>
+    <string name="priority">報文優先級</string>
+    <string name="pd_mode">PD 模式</string>
+    <string name="report_mode">報文格式</string>
+    <string name="vbus_mode">VBUS 模式</string>
+    <string name="trigger_hold">誘騙保持</string>
+    <string name="trigger_timing">誘騙時機</string>
+    <string name="adc_log">ADC 日誌</string>
+    <string name="adc_interval">ADC 間隔（ms）</string>
+    <string name="flash_fallback">Flash 降級存儲</string>
+    <string name="apply_system">檢查並應用更改</string>
+    <string name="system_no_changes">系統設置沒有變化。</string>
+    <string name="system_applying">正在依序應用 %1$d 項系統設置…</string>
+    <string name="system_applied">系統設置已應用並同步</string>
+    <string name="system_confirm_title">應用系統設置？</string>
+    <string name="system_confirm_message">將寫入以下項目：\n%1$s</string>
+    <string name="pd_reset_warning">\n\nPD 模式變更會觸發 Hard Reset 和重新協商。</string>
+    <string name="invalid_adc_interval">ADC 間隔必須是至少 100ms 的整數</string>
+
+    <string name="tools_title">設備與工具</string>
+    <string name="device_information">設備信息</string>
+    <string name="refresh">重新檢測 USB</string>
+    <string name="request_permission">授權訪問設備</string>
+    <string name="danger_zone">重新啟動</string>
+    <string name="danger_hint">以下操作可能讓輸出短暫中斷。</string>
+    <string name="mcu_reboot">MCU 重啟</string>
+    <string name="usb_pd_reboot">USB PD 重新協商</string>
+    <string name="confirm_mcu_reboot">MCU 將重新啟動，USB 設備可能短暫斷開。繼續？</string>
+    <string name="confirm_usb_pd_reboot">USB PD 將重新協商，輸出可能短暫中斷。繼續？</string>
+    <string name="rebooting_mcu">MCU 重啟命令已發送，等待設備重新連接…</string>
+    <string name="rebooting_pd">USB PD 正在重新協商…</string>
+    <string name="communication_log">操作日誌</string>
+    <string name="clear_log">清除日誌</string>
+    <string name="log_empty">尚無操作記錄。</string>
+</resources>
+

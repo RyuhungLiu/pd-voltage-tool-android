@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_title">應用設置</string>
+    <string name="language_label">顯示語言</string>
+    <string name="apply_language">應用語言</string>
+    <string name="language_system_default">跟隨系統</string>
+</resources>

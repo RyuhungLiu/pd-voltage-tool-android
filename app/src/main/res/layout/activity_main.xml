@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F6FA"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F4F6FA"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="18dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title"
+                    android:textColor="#172033"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/subtitle"
+                    android:textColor="#667085"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/status_card_background"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="14dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="14dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/connectionDot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="●"
+                android:textColor="#98A2B3"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/statusText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="@string/no_usb_device"
+                    android:textColor="#172033"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/deviceSummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:maxLines="1"
+                    android:text="@string/connect_hint"
+                    android:textColor="#667085"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ViewFlipper
+        android:id="@+id/pageFlipper"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="24dp">
+
+                <TextView
+                    style="@style/Text.Pd.SectionTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/current_preset" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/panel_background"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/Text.Pd.Label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/voltage_short" />
+
+                            <TextView
+                                android:id="@+id/presetVoltageText"
+                                style="@style/Text.Pd.Value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="@string/voltage_value_empty" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/Text.Pd.Label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/current_short" />
+
+                            <TextView
+                                android:id="@+id/presetCurrentText"
+                                style="@style/Text.Pd.Value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="@string/current_value_empty" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="#EAECF0" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/modeText"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/mode_value_empty"
+                            android:textColor="#344054"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/vbusText"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="@string/vbus_value_empty"
+                            android:textColor="#344054"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    style="@style/Text.Pd.SectionTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/preset_title" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/panel_background"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/Text.Pd.Label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/voltage_label" />
+
+                            <EditText
+                                android:id="@+id/voltageInput"
+                                android:layout_width="match_parent"
+                                android:layout_height="52dp"
+                                android:digits="0123456789."
+                                android:hint="5.00"
+                                android:inputType="numberDecimal"
+                                android:selectAllOnFocus="true"
+                                android:text="5.00"
+                                android:textColor="#172033"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/voltage_hint"
+                                android:textColor="#667085"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/Text.Pd.Label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/current_label" />
+
+                            <EditText
+                                android:id="@+id/currentInput"
+                                android:layout_width="match_parent"
+                                android:layout_height="52dp"
+                                android:digits="0123456789."
+                                android:hint="3.0"
+                                android:inputType="numberDecimal"
+                                android:selectAllOnFocus="true"
+                                android:text="3.0"
+                                android:textColor="#172033"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/current_hint"
+                                android:textColor="#667085"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/Text.Pd.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/quick_voltage" />
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <Button android:id="@+id/quick5Button" style="@style/Widget.Pd.SecondaryButton" android:layout_width="64dp" android:layout_height="44dp" android:text="5V" />
+                            <Button android:id="@+id/quick9Button" style="@style/Widget.Pd.SecondaryButton" android:layout_width="64dp" android:layout_height="44dp" android:layout_marginStart="6dp" android:text="9V" />
+                            <Button android:id="@+id/quick12Button" style="@style/Widget.Pd.SecondaryButton" android:layout_width="64dp" android:layout_height="44dp" android:layout_marginStart="6dp" android:text="12V" />
+                            <Button android:id="@+id/quick15Button" style="@style/Widget.Pd.SecondaryButton" android:layout_width="64dp" android:layout_height="44dp" android:layout_marginStart="6dp" android:text="15V" />
+                            <Button android:id="@+id/quick20Button" style="@style/Widget.Pd.SecondaryButton" android:layout_width="64dp" android:layout_height="44dp" android:layout_marginStart="6dp" android:text="20V" />
+                            <Button android:id="@+id/quick28Button" style="@style/Widget.Pd.SecondaryButton" android:layout_width="64dp" android:layout_height="44dp" android:layout_marginStart="6dp" android:text="28V" />
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
+                    <TextView
+                        android:id="@+id/powerPreview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:textColor="#475467"
+                        android:textSize="13sp" />
+
+                    <Button
+                        android:id="@+id/applyButton"
+                        style="@style/Widget.Pd.PrimaryButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginTop="12dp"
+                        android:enabled="false"
+                        android:text="@string/apply" />
+
+                    <Button
+                        android:id="@+id/queryButton"
+                        style="@style/Widget.Pd.SecondaryButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:layout_marginTop="6dp"
+                        android:enabled="false"
+                        android:text="@string/query_status" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/protocolStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:lineSpacingExtra="2dp"
+                    android:text="@string/protocol_waiting"
+                    android:textColor="#667085"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="24dp">
+
+                <TextView style="@style/Text.Pd.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/system_title" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="@string/system_hint" android:textColor="#667085" android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/nanoNotice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/notice_background"
+                    android:padding="12dp"
+                    android:text="@string/nano_locked"
+                    android:textColor="#93370D"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/panel_background"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="52dp" android:gravity="center_vertical" android:orientation="horizontal">
+                        <TextView style="@style/Text.Pd.Label" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/vbus_control" />
+                        <Switch android:id="@+id/vbusSwitch" android:layout_width="wrap_content" android:layout_height="wrap_content" android:showText="true" android:textOff="OFF" android:textOn="ON" />
+                    </LinearLayout>
+
+                    <TextView style="@style/Text.Pd.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/priority" />
+                    <Spinner android:id="@+id/prioritySpinner" android:layout_width="match_parent" android:layout_height="48dp" />
+
+                    <TextView style="@style/Text.Pd.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/pd_mode" />
+                    <Spinner android:id="@+id/pdModeSpinner" android:layout_width="match_parent" android:layout_height="48dp" />
+
+                    <TextView style="@style/Text.Pd.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/report_mode" />
+                    <Spinner android:id="@+id/reportSpinner" android:layout_width="match_parent" android:layout_height="48dp" />
+
+                    <TextView style="@style/Text.Pd.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/vbus_mode" />
+                    <Spinner android:id="@+id/vbusModeSpinner" android:layout_width="match_parent" android:layout_height="48dp" />
+
+                    <TextView style="@style/Text.Pd.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/trigger_hold" />
+                    <Spinner android:id="@+id/triggerHoldSpinner" android:layout_width="match_parent" android:layout_height="48dp" />
+
+                    <TextView style="@style/Text.Pd.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/trigger_timing" />
+                    <Spinner android:id="@+id/triggerTimingSpinner" android:layout_width="match_parent" android:layout_height="48dp" />
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:gravity="center_vertical" android:orientation="horizontal">
+                        <TextView style="@style/Text.Pd.Label" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/adc_log" />
+                        <Switch android:id="@+id/adcLogSwitch" android:layout_width="wrap_content" android:layout_height="wrap_content" android:showText="true" android:textOff="OFF" android:textOn="ON" />
+                    </LinearLayout>
+
+                    <TextView style="@style/Text.Pd.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/adc_interval" />
+                    <EditText
+                        android:id="@+id/adcIntervalInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:digits="0123456789"
+                        android:inputType="number"
+                        android:text="1000"
+                        android:textColor="#172033"
+                        android:textSize="16sp" />
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:gravity="center_vertical" android:orientation="horizontal">
+                        <TextView style="@style/Text.Pd.Label" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/flash_fallback" />
+                        <Switch android:id="@+id/flashFallbackSwitch" android:layout_width="wrap_content" android:layout_height="wrap_content" android:showText="true" android:textOff="OFF" android:textOn="ON" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/applySystemButton"
+                        style="@style/Widget.Pd.PrimaryButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginTop="14dp"
+                        android:enabled="false"
+                        android:text="@string/apply_system" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/systemStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/protocol_waiting"
+                    android:textColor="#667085"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="24dp">
+
+                <TextView style="@style/Text.Pd.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tools_title" />
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:background="@drawable/panel_background" android:orientation="vertical" android:padding="16dp">
+                    <TextView style="@style/Text.Pd.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/device_information" />
+                    <TextView android:id="@+id/deviceDetails" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:fontFamily="monospace" android:lineSpacingExtra="3dp" android:text="@string/connect_hint" android:textColor="#344054" android:textIsSelectable="true" android:textSize="13sp" />
+                    <Button android:id="@+id/refreshButton" style="@style/Widget.Pd.SecondaryButton" android:layout_width="match_parent" android:layout_height="46dp" android:layout_marginTop="14dp" android:text="@string/refresh" />
+                    <Button android:id="@+id/permissionButton" style="@style/Widget.Pd.SecondaryButton" android:layout_width="match_parent" android:layout_height="46dp" android:layout_marginTop="6dp" android:enabled="false" android:text="@string/request_permission" />
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="@string/supported_ids" android:textColor="#98A2B3" android:textSize="11sp" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:background="@drawable/panel_background" android:orientation="vertical" android:padding="16dp">
+                    <TextView style="@style/Text.Pd.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/settings_title" />
+                    <TextView style="@style/Text.Pd.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="@string/language_label" />
+                    <Spinner android:id="@+id/languageSpinner" android:layout_width="match_parent" android:layout_height="48dp" />
+                    <Button android:id="@+id/applyLanguageButton" style="@style/Widget.Pd.SecondaryButton" android:layout_width="match_parent" android:layout_height="46dp" android:layout_marginTop="8dp" android:text="@string/apply_language" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:background="@drawable/panel_background" android:orientation="vertical" android:padding="16dp">
+                    <TextView style="@style/Text.Pd.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/danger_zone" />
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="@string/danger_hint" android:textColor="#B42318" android:textSize="12sp" />
+                    <Button android:id="@+id/usbPdRebootButton" style="@style/Widget.Pd.DangerButton" android:layout_width="match_parent" android:layout_height="46dp" android:layout_marginTop="12dp" android:enabled="false" android:text="@string/usb_pd_reboot" />
+                    <Button android:id="@+id/mcuRebootButton" style="@style/Widget.Pd.DangerButton" android:layout_width="match_parent" android:layout_height="46dp" android:layout_marginTop="6dp" android:enabled="false" android:text="@string/mcu_reboot" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:background="@drawable/panel_background" android:orientation="vertical" android:padding="16dp">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+                        <TextView style="@style/Text.Pd.SectionTitle" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/communication_log" />
+                        <Button android:id="@+id/clearLogButton" style="@style/Widget.Pd.SecondaryButton" android:layout_width="wrap_content" android:layout_height="40dp" android:text="@string/clear_log" />
+                    </LinearLayout>
+                    <TextView android:id="@+id/eventLogText" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:fontFamily="monospace" android:lineSpacingExtra="3dp" android:text="@string/log_empty" android:textColor="#475467" android:textIsSelectable="true" android:textSize="11sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </ViewFlipper>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_nav_background"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="4dp">
+
+        <Button android:id="@+id/tabControl" style="@style/Widget.Pd.TabButton" android:layout_width="0dp" android:layout_height="58dp" android:layout_weight="1" android:text="@string/tab_control" />
+        <Button android:id="@+id/tabSystem" style="@style/Widget.Pd.TabButton" android:layout_width="0dp" android:layout_height="58dp" android:layout_weight="1" android:text="@string/tab_system" />
+        <Button android:id="@+id/tabTools" style="@style/Widget.Pd.TabButton" android:layout_width="0dp" android:layout_height="58dp" android:layout_weight="1" android:text="@string/tab_tools" />
+    </LinearLayout>
+</LinearLayout>
+
+

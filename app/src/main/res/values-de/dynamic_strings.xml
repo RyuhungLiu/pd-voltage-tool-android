@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="device_connected">%1$s verbunden</string>
+    <string name="device_summary_format">VID %1$04X · PID %2$04X · %3$s</string>
+    <string name="status_readback">%1$s · Gerätevorgabe bestätigt</string>
+</resources>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.PdVoltage" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">#F4F6FA</item>
+        <item name="android:navigationBarColor">#FFFFFF</item>
+        <item name="android:colorAccent">#2563EB</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="Widget.Pd.PrimaryButton" parent="android:style/Widget.Material.Button">
+        <item name="android:backgroundTint">#2563EB</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:minHeight">50dp</item>
+    </style>
+
+    <style name="Widget.Pd.SecondaryButton" parent="android:style/Widget.Material.Button">
+        <item name="android:backgroundTint">#E8EEF9</item>
+        <item name="android:textColor">#1D4ED8</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:minHeight">46dp</item>
+    </style>
+
+    <style name="Widget.Pd.DangerButton" parent="android:style/Widget.Material.Button">
+        <item name="android:backgroundTint">#FEE4E2</item>
+        <item name="android:textColor">#B42318</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:minHeight">46dp</item>
+    </style>
+
+    <style name="Widget.Pd.TabButton" parent="android:style/Widget.Material.Button.Borderless">
+        <item name="android:backgroundTint">#FFFFFF</item>
+        <item name="android:textColor">#667085</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:minHeight">58dp</item>
+        <item name="android:padding">4dp</item>
+    </style>
+
+    <style name="Text.Pd.SectionTitle" parent="">
+        <item name="android:textColor">#172033</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Pd.Label" parent="">
+        <item name="android:textColor">#667085</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Pd.Value" parent="">
+        <item name="android:textColor">#172033</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>

@@ -35,6 +35,7 @@ object PdUsbProtocol {
     const val CMD_FLASH_FALLBACK_ON = 0x82
     const val CMD_TRIGGER_IMMEDIATE = 0x91
     const val CMD_TRIGGER_DELAYED = 0x92
+    const val CMD_ENTER_BOOTLOADER = 0xF0
 
     private const val REQUEST_HEADER_0 = 0x52
     private const val REQUEST_HEADER_1 = 0xFF
@@ -182,3 +183,4 @@ object PdUsbProtocol {
             (u8(offset + 2).toLong() shl 16) or
             (u8(offset + 3).toLong() shl 24)
 }
+

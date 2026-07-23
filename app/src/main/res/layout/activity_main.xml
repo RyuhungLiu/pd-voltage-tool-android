@@ -501,6 +501,32 @@
                     <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="@string/supported_ids" android:textColor="#98A2B3" android:textSize="11sp" />
                 </LinearLayout>
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/panel_background"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView style="@style/Text.Pd.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/firmware_update" />
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="@string/firmware_hint" android:textColor="#667085" android:textSize="12sp" />
+                    <TextView android:id="@+id/firmwareStatus" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:fontFamily="monospace" android:lineSpacingExtra="3dp" android:text="@string/firmware_status_empty" android:textColor="#344054" android:textIsSelectable="true" android:textSize="13sp" />
+                    <ProgressBar
+                        android:id="@+id/firmwareProgress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="12dp"
+                        android:max="100"
+                        android:progress="0"
+                        android:visibility="gone" />
+                    <Button android:id="@+id/pullFirmwareButton" style="@style/Widget.Pd.SecondaryButton" android:layout_width="match_parent" android:layout_height="46dp" android:layout_marginTop="14dp" android:enabled="false" android:text="@string/pull_latest_firmware" />
+                    <Button android:id="@+id/bootloaderButton" style="@style/Widget.Pd.SecondaryButton" android:layout_width="match_parent" android:layout_height="46dp" android:layout_marginTop="6dp" android:enabled="false" android:text="@string/enter_bootloader" />
+                    <Button android:id="@+id/flashFirmwareButton" style="@style/Widget.Pd.DangerButton" android:layout_width="match_parent" android:layout_height="46dp" android:layout_marginTop="6dp" android:enabled="false" android:text="@string/flash_firmware" />
+                </LinearLayout>
+
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:background="@drawable/panel_background" android:orientation="vertical" android:padding="16dp">
                     <TextView style="@style/Text.Pd.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/settings_title" />
                     <TextView style="@style/Text.Pd.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="@string/language_label" />
@@ -540,5 +566,6 @@
         <Button android:id="@+id/tabTools" style="@style/Widget.Pd.TabButton" android:layout_width="0dp" android:layout_height="58dp" android:layout_weight="1" android:text="@string/tab_tools" />
     </LinearLayout>
 </LinearLayout>
+
 
 

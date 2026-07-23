@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">PD 電壓工具</string>
     <string name="title">PD 電壓工具</string>
-    <string name="subtitle">USB HID 控制版 · v0.3.0</string>
+    <string name="subtitle">USB HID 控制版 · v0.4.0</string>
     <string name="tab_control">調壓</string>
     <string name="tab_system">系統</string>
     <string name="tab_tools">工具</string>
@@ -19,7 +19,7 @@
     <string name="permission_no">未授權</string>
     <string name="unknown_usb_device">未知 USB 設備</string>
     <string name="device_line">%1$s\nVID %2$04X · PID %3$04X\n接口 %4$d · %5$s</string>
-    <string name="supported_ids">支持：VID A016 · Std 0404 · Nano 0104</string>
+    <string name="supported_ids">支持：VID A016 · Std 0404/0405 · Nano 0104/0105</string>
 
     <string name="current_preset">設備預設值</string>
     <string name="voltage_value_empty">-- V</string>
@@ -78,6 +78,34 @@
     <string name="device_information">設備信息</string>
     <string name="refresh">重新檢測 USB</string>
     <string name="request_permission">授權訪問設備</string>
+
+    <string name="firmware_update">固件升級</string>
+    <string name="firmware_hint">先拉取與設備型號匹配的最新固件。設備進入 Bootloader 後會以新 PID 重新連接，必須再次授權，且只有 BL 模式可以刷寫。</string>
+    <string name="firmware_status_empty">尚未拉取固件。</string>
+    <string name="pull_latest_firmware">拉取最新固件</string>
+    <string name="enter_bootloader">進入 BL 模式</string>
+    <string name="exit_bootloader">退出 BL 模式</string>
+    <string name="flash_firmware">刷寫固件</string>
+    <string name="confirm_enter_bl_title">進入 Bootloader？</string>
+    <string name="confirm_enter_bl_message">設備會斷開並以新的 USB PID 重新連接。Android 將要求您再次授權。</string>
+    <string name="confirm_exit_bl_title">退出 Bootloader？</string>
+    <string name="confirm_exit_bl_message">設備會返回 APP 模式並重新枚舉，可能需要再次授權。</string>
+    <string name="switching_to_bl">進入 BL 命令已發送，等待 Bootloader 重新連接並授權…</string>
+    <string name="switching_to_app">退出 BL 命令已發送，等待 APP 模式重新連接並授權…</string>
+    <string name="bootloader_connected">Bootloader %1$s 已連接 · %2$s</string>
+    <string name="bootloader_too_old">Bootloader 版本低於刷寫所需的 1.3.0。</string>
+    <string name="firmware_fetching">正在拉取最新固件…</string>
+    <string name="firmware_downloaded">%1$s\n版本：%2$s · 型號：%3$s\n大小：%4$.1f KB · 固件文件頭校驗通過</string>
+    <string name="firmware_download_failed">拉取固件失敗：%1$s</string>
+    <string name="firmware_hardware_mismatch">固件型號 %1$s 與設備 %2$s 不匹配。</string>
+    <string name="confirm_flash_title">確認刷寫固件？</string>
+    <string name="confirm_flash_message">將刷寫 %1$s（%2$s，%3$.1f KB）。刷寫期間請勿拔線或斷電。</string>
+    <string name="flashing_firmware">正在刷寫固件：%1$d%%</string>
+    <string name="firmware_verifying">數據已寫入，正在校驗 CRC32…</string>
+    <string name="firmware_flash_complete">刷寫與 CRC32 校驗成功，等待設備返回 APP 模式並重新授權…</string>
+    <string name="firmware_flash_failed">刷寫失敗：%1$s</string>
+    <string name="bl_permission_required">已檢測到 Bootloader，請在系統彈窗中重新授權 USB 訪問。</string>
+
     <string name="danger_zone">重新啟動</string>
     <string name="danger_hint">以下操作可能讓輸出短暫中斷。</string>
     <string name="mcu_reboot">MCU 重啟</string>
@@ -90,4 +118,5 @@
     <string name="clear_log">清除日誌</string>
     <string name="log_empty">尚無操作記錄。</string>
 </resources>
+
 

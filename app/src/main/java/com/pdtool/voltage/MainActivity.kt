@@ -17,6 +17,7 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
@@ -35,12 +36,20 @@ class MainActivity : Activity() {
     private lateinit var usbManager: UsbManager
     private val ioExecutor = Executors.newSingleThreadExecutor()
     private val logLines = ArrayDeque<String>()
+    private val firmwareRepository = FirmwareRepository()
 
     @Volatile
     private var session: UsbHidSession? = null
     private var isBusy = false
     private var hasReadStatus = false
     private var lastStatus: PdUsbProtocol.DeviceStatus? = null
+    private var bootloaderInfo: FirmwareProtocol.BootloaderInfo? = null
+    private var firmwareRelease: FirmwareRepository.Release? = null
+    private var firmwareImage: FirmwareProtocol.Image? = null
+    private var awaitingMode: UsbMode? = null
+    private var pendingPermissionDeviceName: String? = null
+
+    private enum class UsbMode { APP, BOOTLOADER }
 
     private data class PendingSystemCommand(
         val command: Int,
@@ -54,22 +63,36 @@ class MainActivity : Activity() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
                 ACTION_USB_PERMISSION -> {
+                    val device = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        intent.getParcelableExtra(UsbManager.EXTRA_DEVICE, UsbDevice::class.java)
+                    } else {
+                        @Suppress("DEPRECATION")
+                        intent.getParcelableExtra(UsbManager.EXTRA_DEVICE)
+                    }
+                    pendingPermissionDeviceName = null
                     val granted = intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)
                     binding.statusText.text = if (granted) {
                         getString(R.string.usb_permission_granted)
                     } else {
                         getString(R.string.usb_permission_denied)
                     }
-                    appendLog(if (granted) "USB 權限已授予" else "USB 權限被拒絕")
+                    appendLog(if (granted) "USB 权限已授予：${device?.let(::profileName) ?: "PD HID"}" else "USB 权限被拒绝")
                     refreshUsbDevices(autoConnect = granted)
                 }
 
+                UsbManager.ACTION_USB_DEVICE_ATTACHED -> {
+                    appendLog("检测到 USB 设备接入")
+                    binding.root.postDelayed({ refreshUsbDevices(autoConnect = true) }, 300)
+                }
+
                 UsbManager.ACTION_USB_DEVICE_DETACHED -> {
-                    appendLog("USB 設備已拔出")
+                    appendLog("USB 设备已拔出或正在重新枚举")
                     hasReadStatus = false
                     lastStatus = null
+                    bootloaderInfo = null
+                    pendingPermissionDeviceName = null
                     closeSessionAsync()
-                    refreshUsbDevices(autoConnect = false)
+                    binding.root.postDelayed({ refreshUsbDevices(autoConnect = true) }, 500)
                 }
             }
         }
@@ -177,6 +200,9 @@ class MainActivity : Activity() {
         binding.applySystemButton.setOnClickListener { confirmAndApplySystemSettings() }
         binding.mcuRebootButton.setOnClickListener { confirmMcuReboot() }
         binding.usbPdRebootButton.setOnClickListener { confirmUsbPdReboot() }
+        binding.pullFirmwareButton.setOnClickListener { pullLatestFirmware() }
+        binding.bootloaderButton.setOnClickListener { confirmBootloaderTransition() }
+        binding.flashFirmwareButton.setOnClickListener { confirmFlashFirmware() }
         binding.clearLogButton.setOnClickListener {
             logLines.clear()
             binding.eventLogText.text = getString(R.string.log_empty)
@@ -197,6 +223,7 @@ class MainActivity : Activity() {
     private fun registerUsbReceiver() {
         val filter = IntentFilter().apply {
             addAction(ACTION_USB_PERMISSION)
+            addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED)
             addAction(UsbManager.ACTION_USB_DEVICE_DETACHED)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -211,12 +238,16 @@ class MainActivity : Activity() {
         val devices = usbManager.deviceList.values.sortedWith(
             compareBy<UsbDevice> { it.vendorId }.thenBy { it.productId },
         )
-        val supported = devices.filter(::isSupportedAppDevice)
-        val target = supported.firstOrNull()
+        val supported = devices.filter(::isSupportedDevice)
+        val target = selectSupportedDevice(supported)
+        val targetReady = target != null && usbManager.hasPermission(target) && when (usbMode(target)) {
+            UsbMode.APP -> hasReadStatus
+            UsbMode.BOOTLOADER -> bootloaderInfo != null
+            null -> false
+        }
 
         binding.statusText.text = when {
-            target != null && usbManager.hasPermission(target) && hasReadStatus ->
-                getString(R.string.device_connected, profileName(target))
+            targetReady -> getString(R.string.device_connected, profileName(target!!))
             supported.isNotEmpty() -> getString(R.string.supported_device_found, supported.size)
             devices.isNotEmpty() -> getString(R.string.usb_devices_found, devices.size)
             else -> getString(R.string.no_usb_device)
@@ -253,7 +284,7 @@ class MainActivity : Activity() {
         binding.connectionDot.setTextColor(
             Color.parseColor(
                 when {
-                    target != null && usbManager.hasPermission(target) && hasReadStatus -> "#12B76A"
+                    targetReady -> "#12B76A"
                     target != null -> "#F79009"
                     else -> "#98A2B3"
                 },
@@ -263,51 +294,274 @@ class MainActivity : Activity() {
         if (target == null) {
             hasReadStatus = false
             lastStatus = null
+            bootloaderInfo = null
             binding.protocolStatus.text = getString(R.string.protocol_waiting)
             binding.systemStatus.text = getString(R.string.protocol_waiting)
             clearStatusSummary()
             closeSessionAsync()
-        } else if (
-            autoConnect &&
-            usbManager.hasPermission(target) &&
-            !isBusy &&
-            session?.device?.deviceName != target.deviceName
-        ) {
-            connectAndQuery(target)
+        } else if (autoConnect && !isBusy) {
+            val mode = usbMode(target)
+            val waitingForDifferentMode = awaitingMode != null && awaitingMode != mode
+            when {
+                waitingForDifferentMode -> Unit
+                !usbManager.hasPermission(target) && awaitingMode == mode -> requestPermissionForDevice(target)
+                usbManager.hasPermission(target) && session?.device?.deviceName != target.deviceName -> connectDevice(target)
+            }
         }
 
+        renderFirmwareStatus()
         updateEnabledState()
     }
 
     private fun requestFirstSupportedDevicePermission() {
-        val device = usbManager.deviceList.values.firstOrNull {
-            isSupportedAppDevice(it) && !usbManager.hasPermission(it)
-        } ?: run {
-            refreshUsbDevices(autoConnect = true)
-            return
-        }
+        val device = selectSupportedDevice(usbManager.deviceList.values.filter(::isSupportedDevice))
+            ?.takeIf { !usbManager.hasPermission(it) }
+            ?: run {
+                refreshUsbDevices(autoConnect = true)
+                return
+            }
+        requestPermissionForDevice(device)
+    }
 
+    private fun requestPermissionForDevice(device: UsbDevice) {
+        if (pendingPermissionDeviceName == device.deviceName) return
+        pendingPermissionDeviceName = device.deviceName
         val intent = Intent(ACTION_USB_PERMISSION).setPackage(packageName)
         val flags = PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
         usbManager.requestPermission(device, PendingIntent.getBroadcast(this, 0, intent, flags))
-        binding.statusText.text = getString(R.string.waiting_for_permission)
+        binding.statusText.text = if (isBootloaderDevice(device)) {
+            getString(R.string.bl_permission_required)
+        } else {
+            getString(R.string.waiting_for_permission)
+        }
     }
 
-    private fun connectAndQuery(device: UsbDevice) {
+    private fun connectDevice(device: UsbDevice) {
         setBusy(true, getString(R.string.connecting_hid))
-        appendLog("連接 ${profileName(device)}")
+        appendLog("连接 ${profileName(device)}")
         ioExecutor.execute {
             try {
                 session?.close()
                 val opened = UsbHidSession.open(usbManager, device)
                 session = opened
-                val status = opened.queryStatus()
-                runOnUiThread { showStatus(status, getString(R.string.status_synced)) }
+                if (isBootloaderDevice(device)) {
+                    val info = opened.queryBootloaderInfo()
+                    runOnUiThread { showBootloader(info) }
+                } else {
+                    val status = opened.queryStatus()
+                    runOnUiThread { showStatus(status, getString(R.string.status_synced)) }
+                }
             } catch (error: Throwable) {
                 session?.close()
                 session = null
                 runOnUiThread { showIoError(error) }
             }
+        }
+    }
+
+    private fun showBootloader(info: FirmwareProtocol.BootloaderInfo) {
+        bootloaderInfo = info
+        hasReadStatus = false
+        lastStatus = null
+        if (awaitingMode == UsbMode.BOOTLOADER) awaitingMode = null
+        binding.protocolStatus.text = getString(R.string.bootloader_connected, info.version, info.hardwareType ?: "?")
+        binding.systemStatus.text = getString(R.string.bootloader_connected, info.version, info.hardwareType ?: "?")
+        appendLog("Bootloader ${info.version} / ${info.hardwareType ?: "unknown"} 已连接")
+        if (!info.isSupported) appendLog(getString(R.string.bootloader_too_old))
+        setBusy(false)
+        refreshUsbDevices(autoConnect = false)
+    }
+
+    private fun pullLatestFirmware() {
+        val device = supportedDevice() ?: return
+        val variant = firmwareVariant(device)
+        val expectedHardware = hardwareType(device)
+        isBusy = true
+        binding.progressBar.visibility = View.VISIBLE
+        binding.firmwareStatus.text = getString(R.string.firmware_fetching)
+        updateEnabledState()
+        appendLog("拉取 ${variant.uppercase()} 最新固件")
+        ioExecutor.execute {
+            try {
+                val release = firmwareRepository.latest(variant)
+                val bytes = firmwareRepository.download(release)
+                val image = FirmwareProtocol.parseImage(bytes)
+                require(image.hardwareType == null || image.hardwareType == expectedHardware) {
+                    getString(R.string.firmware_hardware_mismatch, image.hardwareType ?: "?", expectedHardware)
+                }
+                firmwareRelease = release
+                firmwareImage = image
+                runOnUiThread {
+                    appendLog("固件 ${release.tag} 已下载并通过 CRC32 校验")
+                    setBusy(false)
+                    renderFirmwareStatus()
+                }
+            } catch (error: Throwable) {
+                runOnUiThread {
+                    val message = error.message ?: error.javaClass.simpleName
+                    binding.firmwareStatus.text = getString(R.string.firmware_download_failed, message)
+                    appendLog("固件拉取失败：$message")
+                    setBusy(false)
+                }
+            }
+        }
+    }
+
+    private fun confirmBootloaderTransition() {
+        val device = supportedDevice() ?: return
+        if (isBootloaderDevice(device)) {
+            AlertDialog.Builder(this)
+                .setTitle(R.string.confirm_exit_bl_title)
+                .setMessage(R.string.confirm_exit_bl_message)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(android.R.string.ok) { _, _ -> exitBootloader() }
+                .show()
+        } else {
+            AlertDialog.Builder(this)
+                .setTitle(R.string.confirm_enter_bl_title)
+                .setMessage(R.string.confirm_enter_bl_message)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(android.R.string.ok) { _, _ -> enterBootloader() }
+                .show()
+        }
+    }
+
+    private fun enterBootloader() {
+        val device = supportedDevice()?.takeIf(::isSupportedAppDevice) ?: return
+        setBusy(true, getString(R.string.switching_to_bl))
+        appendLog("发送进入 Bootloader 命令")
+        ioExecutor.execute {
+            try {
+                activeSession(device).enterBootloader()
+                session?.close()
+                session = null
+                runOnUiThread {
+                    awaitingMode = UsbMode.BOOTLOADER
+                    hasReadStatus = false
+                    lastStatus = null
+                    bootloaderInfo = null
+                    setBusy(false, getString(R.string.switching_to_bl))
+                    binding.firmwareStatus.text = getString(R.string.switching_to_bl)
+                    binding.root.postDelayed({ refreshUsbDevices(autoConnect = true) }, 1_500)
+                }
+            } catch (error: Throwable) {
+                runOnUiThread { showIoError(error) }
+            }
+        }
+    }
+
+    private fun exitBootloader() {
+        val device = supportedDevice()?.takeIf(::isBootloaderDevice) ?: return
+        setBusy(true, getString(R.string.switching_to_app))
+        appendLog("发送退出 Bootloader 命令")
+        ioExecutor.execute {
+            try {
+                activeSession(device).exitBootloader()
+                session?.close()
+                session = null
+                runOnUiThread {
+                    awaitingMode = UsbMode.APP
+                    bootloaderInfo = null
+                    setBusy(false, getString(R.string.switching_to_app))
+                    binding.firmwareStatus.text = getString(R.string.switching_to_app)
+                    binding.root.postDelayed({ refreshUsbDevices(autoConnect = true) }, 1_500)
+                }
+            } catch (error: Throwable) {
+                runOnUiThread { showIoError(error) }
+            }
+        }
+    }
+
+    private fun confirmFlashFirmware() {
+        val device = supportedDevice()?.takeIf(::isBootloaderDevice) ?: return
+        val release = firmwareRelease ?: return
+        val image = firmwareImage ?: return
+        AlertDialog.Builder(this)
+            .setTitle(R.string.confirm_flash_title)
+            .setMessage(
+                getString(
+                    R.string.confirm_flash_message,
+                    release.name,
+                    image.version ?: release.tag,
+                    image.payload.size / 1024.0,
+                ),
+            )
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(android.R.string.ok) { _, _ -> flashFirmware(device, image) }
+            .show()
+    }
+
+    private fun flashFirmware(device: UsbDevice, image: FirmwareProtocol.Image) {
+        check(isBootloaderDevice(device)) { "Firmware can only be flashed in Bootloader mode" }
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        binding.firmwareProgress.progress = 0
+        binding.firmwareProgress.visibility = View.VISIBLE
+        setBusy(true, getString(R.string.flashing_firmware, 0))
+        appendLog("开始刷写 ${image.version ?: "firmware"}")
+        ioExecutor.execute {
+            try {
+                activeSession(device).flashFirmware(image, hardwareType(device)) { progress ->
+                    runOnUiThread {
+                        binding.firmwareProgress.progress = progress
+                        binding.firmwareStatus.text = if (progress >= 100) {
+                            getString(R.string.firmware_verifying)
+                        } else {
+                            getString(R.string.flashing_firmware, progress)
+                        }
+                    }
+                }
+                session?.close()
+                session = null
+                runOnUiThread {
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                    awaitingMode = UsbMode.APP
+                    bootloaderInfo = null
+                    binding.firmwareProgress.progress = 100
+                    binding.firmwareStatus.text = getString(R.string.firmware_flash_complete)
+                    appendLog("固件刷写和 CRC32 校验成功")
+                    setBusy(false, getString(R.string.firmware_flash_complete))
+                    binding.root.postDelayed({ refreshUsbDevices(autoConnect = true) }, 1_500)
+                }
+            } catch (error: Throwable) {
+                runOnUiThread {
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                    val message = error.message ?: error.javaClass.simpleName
+                    binding.firmwareStatus.text = getString(R.string.firmware_flash_failed, message)
+                    appendLog("固件刷写失败：$message")
+                    setBusy(false)
+                }
+            }
+        }
+    }
+
+    private fun renderFirmwareStatus() {
+        if (isBusy) return
+        val device = supportedDevice()
+        val release = firmwareRelease
+        val image = firmwareImage
+        binding.firmwareStatus.text = buildString {
+            if (device != null) {
+                val info = bootloaderInfo
+                if (isBootloaderDevice(device) && info != null) {
+                    append(getString(R.string.bootloader_connected, info.version, info.hardwareType ?: "?"))
+                    if (!info.isSupported) append("\n").append(getString(R.string.bootloader_too_old))
+                } else {
+                    append("${profileName(device)} · APP")
+                }
+            }
+            if (release != null && image != null) {
+                if (isNotEmpty()) append("\n\n")
+                append(
+                    getString(
+                        R.string.firmware_downloaded,
+                        release.name,
+                        image.version ?: release.tag,
+                        image.hardwareType ?: "?",
+                        image.payload.size / 1024.0,
+                    ),
+                )
+            }
+            if (isEmpty()) append(getString(R.string.firmware_status_empty))
         }
     }
 
@@ -589,6 +843,8 @@ class MainActivity : Activity() {
     private fun showStatus(status: PdUsbProtocol.DeviceStatus, headline: String) {
         lastStatus = status
         hasReadStatus = true
+        bootloaderInfo = null
+        if (awaitingMode == UsbMode.APP) awaitingMode = null
         if (!binding.voltageInput.hasFocus() && status.presetVoltageMv > 0) {
             binding.voltageInput.setText(formatVoltage(status.presetVoltageMv))
         }
@@ -653,29 +909,36 @@ class MainActivity : Activity() {
     private fun updateEnabledState() {
         val device = supportedDevice()
         val hasPermission = device != null && usbManager.hasPermission(device)
-        val ready = !isBusy && hasPermission && hasReadStatus
+        val appMode = device != null && isSupportedAppDevice(device)
+        val bootloaderMode = device != null && isBootloaderDevice(device)
+        val appReady = !isBusy && hasPermission && appMode && hasReadStatus
+        val bootloaderReady = !isBusy && hasPermission && bootloaderMode && bootloaderInfo?.isSupported == true
         val nano = isNanoDevice(device)
 
         binding.refreshButton.isEnabled = !isBusy
         binding.permissionButton.isEnabled = !isBusy && device != null && !hasPermission
-        binding.queryButton.isEnabled = !isBusy && hasPermission
-        binding.applyButton.isEnabled = ready
-        binding.applySystemButton.isEnabled = ready
-        binding.mcuRebootButton.isEnabled = ready
-        binding.usbPdRebootButton.isEnabled = ready
+        binding.queryButton.isEnabled = !isBusy && hasPermission && appMode
+        binding.applyButton.isEnabled = appReady
+        binding.applySystemButton.isEnabled = appReady
+        binding.mcuRebootButton.isEnabled = appReady
+        binding.usbPdRebootButton.isEnabled = appReady
+        binding.pullFirmwareButton.isEnabled = !isBusy && device != null
+        binding.bootloaderButton.text = getString(if (bootloaderMode) R.string.exit_bootloader else R.string.enter_bootloader)
+        binding.bootloaderButton.isEnabled = appReady || bootloaderReady
+        binding.flashFirmwareButton.isEnabled = bootloaderReady && firmwareImage != null
 
-        binding.prioritySpinner.isEnabled = ready
-        binding.pdModeSpinner.isEnabled = ready
-        binding.reportSpinner.isEnabled = ready
-        binding.triggerHoldSpinner.isEnabled = ready
-        binding.triggerTimingSpinner.isEnabled = ready
+        binding.prioritySpinner.isEnabled = appReady
+        binding.pdModeSpinner.isEnabled = appReady
+        binding.reportSpinner.isEnabled = appReady
+        binding.triggerHoldSpinner.isEnabled = appReady
+        binding.triggerTimingSpinner.isEnabled = appReady
 
-        binding.vbusSwitch.isEnabled = ready && !nano
-        binding.vbusModeSpinner.isEnabled = ready && !nano
-        binding.adcLogSwitch.isEnabled = ready && !nano
-        binding.adcIntervalInput.isEnabled = ready && !nano
-        binding.flashFallbackSwitch.isEnabled = ready && !nano
-        binding.nanoNotice.visibility = if (device != null && nano) View.VISIBLE else View.GONE
+        binding.vbusSwitch.isEnabled = appReady && !nano
+        binding.vbusModeSpinner.isEnabled = appReady && !nano
+        binding.adcLogSwitch.isEnabled = appReady && !nano
+        binding.adcIntervalInput.isEnabled = appReady && !nano
+        binding.flashFallbackSwitch.isEnabled = appReady && !nano
+        binding.nanoNotice.visibility = if (device != null && appMode && nano) View.VISIBLE else View.GONE
     }
 
     private fun clearStatusSummary() {
@@ -718,17 +981,44 @@ class MainActivity : Activity() {
     }
 
     private fun supportedDevice(): UsbDevice? =
-        usbManager.deviceList.values.firstOrNull(::isSupportedAppDevice)
+        selectSupportedDevice(usbManager.deviceList.values.filter(::isSupportedDevice))
+
+    private fun selectSupportedDevice(devices: Collection<UsbDevice>): UsbDevice? {
+        awaitingMode?.let { expected ->
+            devices.firstOrNull { usbMode(it) == expected }?.let { return it }
+        }
+        return devices.firstOrNull { session?.device?.deviceName == it.deviceName }
+            ?: devices.firstOrNull(::isBootloaderDevice)
+            ?: devices.firstOrNull(::isSupportedAppDevice)
+    }
+
+    private fun isSupportedDevice(device: UsbDevice): Boolean =
+        device.vendorId == PD_VENDOR_ID && device.productId in SUPPORTED_PRODUCT_IDS
 
     private fun isSupportedAppDevice(device: UsbDevice): Boolean =
         device.vendorId == PD_VENDOR_ID && device.productId in SUPPORTED_APP_PRODUCT_IDS
 
+    private fun isBootloaderDevice(device: UsbDevice): Boolean =
+        device.vendorId == PD_VENDOR_ID && device.productId in SUPPORTED_BOOTLOADER_PRODUCT_IDS
+
+    private fun usbMode(device: UsbDevice): UsbMode? = when {
+        isSupportedAppDevice(device) -> UsbMode.APP
+        isBootloaderDevice(device) -> UsbMode.BOOTLOADER
+        else -> null
+    }
+
     private fun isNanoDevice(device: UsbDevice?): Boolean =
-        device?.vendorId == PD_VENDOR_ID && device.productId == NANO_APP_PRODUCT_ID
+        device?.vendorId == PD_VENDOR_ID && device.productId in setOf(NANO_APP_PRODUCT_ID, NANO_BOOTLOADER_PRODUCT_ID)
+
+    private fun hardwareType(device: UsbDevice): String = if (isNanoDevice(device)) "NANO" else "STD"
+
+    private fun firmwareVariant(device: UsbDevice): String = hardwareType(device).lowercase()
 
     private fun profileName(device: UsbDevice): String = when {
-        device.vendorId == PD_VENDOR_ID && device.productId == STD_APP_PRODUCT_ID -> "PD Std"
-        device.vendorId == PD_VENDOR_ID && device.productId == NANO_APP_PRODUCT_ID -> "PD Nano"
+        device.vendorId == PD_VENDOR_ID && device.productId == STD_APP_PRODUCT_ID -> "PD Std · APP"
+        device.vendorId == PD_VENDOR_ID && device.productId == STD_BOOTLOADER_PRODUCT_ID -> "PD Std · BL"
+        device.vendorId == PD_VENDOR_ID && device.productId == NANO_APP_PRODUCT_ID -> "PD Nano · APP"
+        device.vendorId == PD_VENDOR_ID && device.productId == NANO_BOOTLOADER_PRODUCT_ID -> "PD Nano · BL"
         else -> device.productName ?: getString(R.string.unknown_usb_device)
     }
 
@@ -792,7 +1082,11 @@ class MainActivity : Activity() {
         private const val PD_VENDOR_ID = 0xA016
         private const val STD_APP_PRODUCT_ID = 0x0404
         private const val NANO_APP_PRODUCT_ID = 0x0104
+        private const val STD_BOOTLOADER_PRODUCT_ID = 0x0405
+        private const val NANO_BOOTLOADER_PRODUCT_ID = 0x0105
         private val SUPPORTED_APP_PRODUCT_IDS = setOf(STD_APP_PRODUCT_ID, NANO_APP_PRODUCT_ID)
+        private val SUPPORTED_BOOTLOADER_PRODUCT_IDS = setOf(STD_BOOTLOADER_PRODUCT_ID, NANO_BOOTLOADER_PRODUCT_ID)
+        private val SUPPORTED_PRODUCT_IDS = SUPPORTED_APP_PRODUCT_IDS + SUPPORTED_BOOTLOADER_PRODUCT_IDS
 
         private const val MIN_VOLTAGE_MV = 3_000
         private const val MAX_VOLTAGE_MV = 48_000
@@ -811,5 +1105,6 @@ class MainActivity : Activity() {
         private const val PAGE_TOOLS = 2
     }
 }
+
 
 

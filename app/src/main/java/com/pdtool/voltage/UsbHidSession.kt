@@ -53,6 +53,75 @@ class UsbHidSession private constructor(
         }
     }
 
+    fun enterBootloader(timeoutMs: Long = 2_000) {
+        send(PdUsbProtocol.command(PdUsbProtocol.CMD_ENTER_BOOTLOADER), timeoutMs)
+    }
+
+    fun queryBootloaderInfo(timeoutMs: Long = 2_000): FirmwareProtocol.BootloaderInfo {
+        val response = bootloaderTransaction(FirmwareProtocol.CMD_BOOTLOADER_INFO, timeoutMs = timeoutMs)
+        return FirmwareProtocol.parseBootloaderInfo(response)
+    }
+
+    fun exitBootloader(timeoutMs: Long = 2_000) {
+        send(FirmwareProtocol.command(FirmwareProtocol.CMD_EXIT_BOOTLOADER), timeoutMs)
+    }
+
+    fun flashFirmware(
+        image: FirmwareProtocol.Image,
+        expectedHardwareType: String,
+        onProgress: (Int) -> Unit,
+    ) {
+        val info = queryBootloaderInfo()
+        require(info.isSupported) { "Bootloader ${info.version} is older than required 1.3.0" }
+        require(info.hardwareType == null || info.hardwareType == expectedHardwareType) {
+            "Bootloader hardware ${info.hardwareType} does not match $expectedHardwareType"
+        }
+        require(image.hardwareType == null || image.hardwareType == expectedHardwareType) {
+            "Firmware hardware ${image.hardwareType} does not match $expectedHardwareType"
+        }
+
+        FirmwareProtocol.requireSuccess(
+            bootloaderTransaction(
+                FirmwareProtocol.CMD_IAP_START,
+                FirmwareProtocol.startPayload(image),
+                timeoutMs = 10_000,
+            ),
+            "IAP start",
+        )
+        onProgress(0)
+
+        var offset = 0
+        while (offset < image.payload.size) {
+            val end = minOf(offset + FirmwareProtocol.DATA_CHUNK_SIZE, image.payload.size)
+            val chunk = image.payload.copyOfRange(offset, end)
+            FirmwareProtocol.requireSuccess(
+                bootloaderTransaction(
+                    FirmwareProtocol.CMD_IAP_DATA,
+                    FirmwareProtocol.dataPayload(offset, chunk),
+                ),
+                "IAP data at 0x${offset.toString(16).uppercase()}",
+            )
+            offset = end
+            onProgress(offset * 100 / image.payload.size)
+        }
+
+        val finish = bootloaderTransaction(FirmwareProtocol.CMD_IAP_FINISH, timeoutMs = 10_000)
+        if (finish.status == FirmwareProtocol.STATUS_CRC_FAILED) {
+            error("Device CRC32 verification failed")
+        }
+        FirmwareProtocol.requireSuccess(finish, "IAP finish")
+        onProgress(100)
+    }
+
+    private fun bootloaderTransaction(
+        command: Int,
+        payload: ByteArray = byteArrayOf(),
+        timeoutMs: Long = 5_000,
+    ): FirmwareProtocol.Response {
+        send(FirmwareProtocol.command(command, payload), timeoutMs)
+        return FirmwareProtocol.parseResponse(receive(timeoutMs), command)
+    }
+
     private fun sendAndWaitForAck(command: Int, payload: ByteArray, timeoutMs: Long) {
         send(PdUsbProtocol.command(command, payload), timeoutMs)
         val ack = waitFor(timeoutMs) { report ->
@@ -148,3 +217,4 @@ class UsbHidSession private constructor(
         }
     }
 }
+

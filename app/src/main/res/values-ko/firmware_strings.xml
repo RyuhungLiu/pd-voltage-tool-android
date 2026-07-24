@@ -1,0 +1,34 @@
+<resources>
+    <string name="firmware_update">펌웨어 업데이트</string>
+    <string name="firmware_hint">처음 준비할 때 기기에 맞는 펌웨어를 내려받아 휴대전화에 저장합니다. 다음부터는 같은 버튼으로 캐시를 사용합니다. Bootloader는 다른 PID로 다시 연결되므로 USB 권한을 다시 허용해야 하며, 쓰기는 BL 모드에서만 가능합니다.</string>
+    <string name="firmware_status_empty">준비된 펌웨어가 없습니다.</string>
+    <string name="pull_latest_firmware">펌웨어 준비</string>
+    <string name="enter_bootloader">BL 모드 진입</string>
+    <string name="exit_bootloader">BL 모드 종료</string>
+    <string name="flash_firmware">펌웨어 쓰기</string>
+    <string name="confirm_enter_bl_title">Bootloader로 진입할까요?</string>
+    <string name="confirm_enter_bl_message">기기 연결이 끊어진 뒤 새 USB PID로 다시 연결됩니다. Android에서 접근 권한을 다시 허용해야 합니다.</string>
+    <string name="confirm_exit_bl_title">Bootloader를 종료할까요?</string>
+    <string name="confirm_exit_bl_message">기기가 APP 모드로 돌아가 다시 인식됩니다. USB 권한을 다시 요청할 수 있습니다.</string>
+    <string name="switching_to_bl">BL 진입 명령을 보냈습니다. Bootloader 재연결 및 권한 승인을 기다리는 중…</string>
+    <string name="switching_to_app">BL 종료 명령을 보냈습니다. APP 모드 재연결 및 권한 승인을 기다리는 중…</string>
+    <string name="bootloader_connected">Bootloader %1$s 연결됨 · %2$s</string>
+    <string name="bootloader_too_old">Bootloader가 필요한 버전 1.3.0보다 오래되었습니다.</string>
+    <string name="firmware_fetching">캐시 확인 또는 펌웨어 가져오는 중…</string>
+    <string name="firmware_downloaded">%1$s\n버전: %2$s · 하드웨어: %3$s\n크기: %4$.1f KB · 펌웨어 헤더 확인됨</string>
+    <string name="firmware_download_failed">펌웨어를 준비할 수 없습니다: %1$s</string>
+    <string name="firmware_preparing">%1$s 펌웨어 준비 중</string>
+    <string name="firmware_source_cache">소스: 로컬 캐시, 다시 내려받을 필요 없음</string>
+    <string name="firmware_source_network">소스: 펌웨어 서버, 로컬 캐시에 저장됨</string>
+    <string name="firmware_cache_used">캐시된 펌웨어 %1$s 사용</string>
+    <string name="firmware_cached">펌웨어 %1$s을(를) 내려받아 기기에 저장했습니다</string>
+    <string name="firmware_fetch_failed_log">펌웨어를 준비할 수 없습니다: %1$s</string>
+    <string name="firmware_hardware_mismatch">펌웨어 하드웨어 %1$s이(가) 기기 %2$s와 일치하지 않습니다.</string>
+    <string name="confirm_flash_title">펌웨어를 쓸까요?</string>
+    <string name="confirm_flash_message">%1$s(%2$s, %3$.1f KB)을(를) 씁니다. 진행 중 케이블이나 전원을 분리하지 마세요.</string>
+    <string name="flashing_firmware">펌웨어 쓰는 중: %1$d%%</string>
+    <string name="firmware_verifying">데이터를 썼습니다. CRC32 확인 중…</string>
+    <string name="firmware_flash_complete">쓰기 및 CRC32 확인을 완료했습니다. APP 모드 복귀와 권한 승인을 기다리는 중…</string>
+    <string name="firmware_flash_failed">쓰기 실패: %1$s</string>
+    <string name="bl_permission_required">Bootloader를 감지했습니다. 시스템 대화상자에서 USB 접근 권한을 다시 허용하세요.</string>
+</resources>

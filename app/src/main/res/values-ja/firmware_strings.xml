@@ -1,0 +1,34 @@
+<resources>
+    <string name="firmware_update">ファームウェア更新</string>
+    <string name="firmware_hint">初回の準備時にデバイスに適合するファームウェアをダウンロードして端末に保存します。次回から同じボタンでキャッシュを使用します。Bootloader は別の PID で再接続されるため、USB 権限を再度許可してください。書き込みは BL モードでのみ可能です。</string>
+    <string name="firmware_status_empty">ファームウェアはまだ準備されていません。</string>
+    <string name="pull_latest_firmware">ファームウェアを準備</string>
+    <string name="enter_bootloader">BL モードに入る</string>
+    <string name="exit_bootloader">BL モードを終了</string>
+    <string name="flash_firmware">ファームウェアを書き込む</string>
+    <string name="confirm_enter_bl_title">Bootloader に入りますか？</string>
+    <string name="confirm_enter_bl_message">デバイスはいったん切断され、新しい USB PID で再接続されます。Android で再度アクセスを許可してください。</string>
+    <string name="confirm_exit_bl_title">Bootloader を終了しますか？</string>
+    <string name="confirm_exit_bl_message">デバイスは APP モードに戻って再認識されます。USB 権限の再許可が必要な場合があります。</string>
+    <string name="switching_to_bl">BL 移行コマンドを送信しました。Bootloader の再接続と権限許可を待っています…</string>
+    <string name="switching_to_app">BL 終了コマンドを送信しました。APP モードの再接続と権限許可を待っています…</string>
+    <string name="bootloader_connected">Bootloader %1$s 接続済み · %2$s</string>
+    <string name="bootloader_too_old">Bootloader が必要なバージョン 1.3.0 より古いため書き込めません。</string>
+    <string name="firmware_fetching">キャッシュを確認、またはファームウェアを取得中…</string>
+    <string name="firmware_downloaded">%1$s\nバージョン：%2$s · ハードウェア：%3$s\nサイズ：%4$.1f KB · ファームウェアヘッダー確認済み</string>
+    <string name="firmware_download_failed">ファームウェアを準備できません：%1$s</string>
+    <string name="firmware_preparing">%1$s ファームウェアを準備中</string>
+    <string name="firmware_source_cache">取得元：ローカルキャッシュ（再ダウンロード不要）</string>
+    <string name="firmware_source_network">取得元：ファームウェアサーバー（ローカルに保存済み）</string>
+    <string name="firmware_cache_used">キャッシュ済みファームウェア %1$s を使用しました</string>
+    <string name="firmware_cached">ファームウェア %1$s をダウンロードして端末に保存しました</string>
+    <string name="firmware_fetch_failed_log">ファームウェアを準備できません：%1$s</string>
+    <string name="firmware_hardware_mismatch">ファームウェアのハードウェア %1$s はデバイス %2$s と一致しません。</string>
+    <string name="confirm_flash_title">ファームウェアを書き込みますか？</string>
+    <string name="confirm_flash_message">%1$s（%2$s、%3$.1f KB）を書き込みます。処理中はケーブルや電源を外さないでください。</string>
+    <string name="flashing_firmware">ファームウェアを書き込み中：%1$d%%</string>
+    <string name="firmware_verifying">データを書き込みました。CRC32 を検証中…</string>
+    <string name="firmware_flash_complete">書き込みと CRC32 検証が完了しました。APP モードへの復帰と権限許可を待っています…</string>
+    <string name="firmware_flash_failed">書き込みに失敗しました：%1$s</string>
+    <string name="bl_permission_required">Bootloader を検出しました。システムダイアログで USB アクセスを再度許可してください。</string>
+</resources>

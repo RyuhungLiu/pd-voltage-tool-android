@@ -1,0 +1,34 @@
+<resources>
+    <string name="firmware_update">Cập nhật firmware</string>
+    <string name="firmware_hint">Lần chuẩn bị đầu tiên sẽ tải firmware phù hợp với thiết bị và lưu cục bộ; các lần sau nút này sẽ dùng bộ nhớ đệm. Bootloader kết nối lại với PID khác nên phải cấp lại quyền USB. Chỉ có thể ghi ở chế độ BL.</string>
+    <string name="firmware_status_empty">Chưa chuẩn bị firmware.</string>
+    <string name="pull_latest_firmware">Chuẩn bị firmware</string>
+    <string name="enter_bootloader">Vào chế độ BL</string>
+    <string name="exit_bootloader">Thoát chế độ BL</string>
+    <string name="flash_firmware">Ghi firmware</string>
+    <string name="confirm_enter_bl_title">Vào Bootloader?</string>
+    <string name="confirm_enter_bl_message">Thiết bị sẽ ngắt kết nối rồi xuất hiện lại với USB PID mới. Android sẽ yêu cầu cấp quyền lại.</string>
+    <string name="confirm_exit_bl_title">Thoát Bootloader?</string>
+    <string name="confirm_exit_bl_message">Thiết bị sẽ trở về chế độ APP và được nhận diện lại. Có thể cần cấp lại quyền USB.</string>
+    <string name="switching_to_bl">Đã gửi lệnh vào BL. Đang chờ Bootloader kết nối lại và cấp quyền…</string>
+    <string name="switching_to_app">Đã gửi lệnh thoát BL. Đang chờ chế độ APP kết nối lại và cấp quyền…</string>
+    <string name="bootloader_connected">Đã kết nối Bootloader %1$s · %2$s</string>
+    <string name="bootloader_too_old">Bootloader cũ hơn phiên bản 1.3.0 bắt buộc.</string>
+    <string name="firmware_fetching">Đang kiểm tra bộ nhớ đệm hoặc tải firmware…</string>
+    <string name="firmware_downloaded">%1$s\nPhiên bản: %2$s · Phần cứng: %3$s\nKích thước: %4$.1f KB · Đã xác thực phần đầu firmware</string>
+    <string name="firmware_download_failed">Không thể chuẩn bị firmware: %1$s</string>
+    <string name="firmware_preparing">Đang chuẩn bị firmware %1$s</string>
+    <string name="firmware_source_cache">Nguồn: bộ nhớ đệm cục bộ, không cần tải lại</string>
+    <string name="firmware_source_network">Nguồn: máy chủ firmware, đã lưu cục bộ</string>
+    <string name="firmware_cache_used">Đang dùng firmware %1$s trong bộ nhớ đệm</string>
+    <string name="firmware_cached">Đã tải và lưu cục bộ firmware %1$s</string>
+    <string name="firmware_fetch_failed_log">Không thể chuẩn bị firmware: %1$s</string>
+    <string name="firmware_hardware_mismatch">Phần cứng firmware %1$s không khớp với thiết bị %2$s.</string>
+    <string name="confirm_flash_title">Ghi firmware?</string>
+    <string name="confirm_flash_message">Sẽ ghi %1$s (%2$s, %3$.1f KB). Không rút cáp hoặc ngắt nguồn trong quá trình ghi.</string>
+    <string name="flashing_firmware">Đang ghi firmware: %1$d%%</string>
+    <string name="firmware_verifying">Đã ghi dữ liệu. Đang xác minh CRC32…</string>
+    <string name="firmware_flash_complete">Đã ghi và xác minh CRC32 thành công. Đang chờ chế độ APP và cấp quyền lại…</string>
+    <string name="firmware_flash_failed">Ghi thất bại: %1$s</string>
+    <string name="bl_permission_required">Đã phát hiện Bootloader. Hãy cấp lại quyền truy cập USB trong hộp thoại hệ thống.</string>
+</resources>

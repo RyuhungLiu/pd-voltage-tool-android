@@ -37,6 +37,7 @@ class MainActivity : Activity() {
     private val ioExecutor = Executors.newSingleThreadExecutor()
     private val logLines = ArrayDeque<String>()
     private val firmwareRepository = FirmwareRepository()
+    private lateinit var firmwareCache: FirmwareCache
 
     @Volatile
     private var session: UsbHidSession? = null
@@ -46,6 +47,7 @@ class MainActivity : Activity() {
     private var bootloaderInfo: FirmwareProtocol.BootloaderInfo? = null
     private var firmwareRelease: FirmwareRepository.Release? = null
     private var firmwareImage: FirmwareProtocol.Image? = null
+    private var firmwareFromCache = false
     private var awaitingMode: UsbMode? = null
     private var pendingPermissionDeviceName: String? = null
 
@@ -103,6 +105,7 @@ class MainActivity : Activity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        firmwareCache = FirmwareCache(this)
         usbManager = getSystemService(USB_SERVICE) as UsbManager
         registerUsbReceiver()
         setupSpinners()
@@ -380,19 +383,49 @@ class MainActivity : Activity() {
         binding.progressBar.visibility = View.VISIBLE
         binding.firmwareStatus.text = getString(R.string.firmware_fetching)
         updateEnabledState()
-        appendLog("拉取 ${variant.uppercase()} 最新固件")
+        appendLog(getString(R.string.firmware_preparing, variant.uppercase()))
         ioExecutor.execute {
             try {
-                val release = firmwareRepository.latest(variant)
-                val bytes = firmwareRepository.download(release)
-                val image = FirmwareProtocol.parseImage(bytes)
-                require(image.hardwareType == null || image.hardwareType == expectedHardware) {
-                    getString(R.string.firmware_hardware_mismatch, image.hardwareType ?: "?", expectedHardware)
+                var cached = firmwareCache.load(variant)
+                if (cached != null && cached.image.hardwareType != null &&
+                    cached.image.hardwareType != expectedHardware
+                ) {
+                    firmwareCache.remove(variant)
+                    cached = null
                 }
+
+                val release: FirmwareRepository.Release
+                val image: FirmwareProtocol.Image
+                val fromCache: Boolean
+                if (cached != null) {
+                    release = cached.release
+                    image = cached.image
+                    fromCache = true
+                } else {
+                    release = firmwareRepository.latest(variant)
+                    val bytes = firmwareRepository.download(release)
+                    image = FirmwareProtocol.parseImage(bytes)
+                    require(image.hardwareType == null || image.hardwareType == expectedHardware) {
+                        getString(
+                            R.string.firmware_hardware_mismatch,
+                            image.hardwareType ?: "?",
+                            expectedHardware,
+                        )
+                    }
+                    firmwareCache.save(release, bytes)
+                    fromCache = false
+                }
+
                 firmwareRelease = release
                 firmwareImage = image
+                firmwareFromCache = fromCache
                 runOnUiThread {
-                    appendLog("固件 ${release.tag} 已下载并通过 CRC32 校验")
+                    appendLog(
+                        getString(
+                            if (fromCache) R.string.firmware_cache_used else R.string.firmware_cached,
+                            release.tag,
+                        ),
+                    )
                     setBusy(false)
                     renderFirmwareStatus()
                 }
@@ -400,7 +433,7 @@ class MainActivity : Activity() {
                 runOnUiThread {
                     val message = error.message ?: error.javaClass.simpleName
                     binding.firmwareStatus.text = getString(R.string.firmware_download_failed, message)
-                    appendLog("固件拉取失败：$message")
+                    appendLog(getString(R.string.firmware_fetch_failed_log, message))
                     setBusy(false)
                 }
             }
@@ -546,7 +579,7 @@ class MainActivity : Activity() {
                     append(getString(R.string.bootloader_connected, info.version, info.hardwareType ?: "?"))
                     if (!info.isSupported) append("\n").append(getString(R.string.bootloader_too_old))
                 } else {
-                    append("${profileName(device)} · APP")
+                    append(profileName(device))
                 }
             }
             if (release != null && image != null) {
@@ -558,6 +591,13 @@ class MainActivity : Activity() {
                         image.version ?: release.tag,
                         image.hardwareType ?: "?",
                         image.payload.size / 1024.0,
+                    ),
+                )
+                append("\n")
+                append(
+                    getString(
+                        if (firmwareFromCache) R.string.firmware_source_cache
+                        else R.string.firmware_source_network,
                     ),
                 )
             }
@@ -1105,6 +1145,4 @@ class MainActivity : Activity() {
         private const val PAGE_TOOLS = 2
     }
 }
-
-
 

@@ -47,9 +47,9 @@
     <string name="language_system_default">跟随系统</string>
 
     <string name="firmware_update">固件升级</string>
-    <string name="firmware_hint">先拉取与设备型号匹配的最新固件。设备进入 Bootloader 后会以新 PID 重新连接，必须再次授权；只有 BL 模式可以刷写。</string>
-    <string name="firmware_status_empty">尚未拉取固件。</string>
-    <string name="pull_latest_firmware">拉取最新固件</string>
+    <string name="firmware_hint">首次准备时下载与设备型号匹配的固件并保存到本机；之后点击同一按钮会直接使用缓存。设备进入 Bootloader 后会以新 PID 重新连接，必须再次授权；只有 BL 模式可以刷写。</string>
+    <string name="firmware_status_empty">尚未准备固件。</string>
+    <string name="pull_latest_firmware">准备固件</string>
     <string name="enter_bootloader">进入 BL 模式</string>
     <string name="exit_bootloader">退出 BL 模式</string>
     <string name="flash_firmware">刷写固件</string>
@@ -61,9 +61,15 @@
     <string name="switching_to_app">退出 BL 命令已发送，等待 APP 模式重新连接并授权…</string>
     <string name="bootloader_connected">Bootloader %1$s 已连接 · %2$s</string>
     <string name="bootloader_too_old">Bootloader 版本低于刷写所需的 1.3.0。</string>
-    <string name="firmware_fetching">正在拉取最新固件…</string>
+    <string name="firmware_fetching">正在检查缓存或获取固件…</string>
     <string name="firmware_downloaded">%1$s\n版本：%2$s · 型号：%3$s\n大小：%4$.1f KB · 固件文件头校验通过</string>
-    <string name="firmware_download_failed">拉取固件失败：%1$s</string>
+    <string name="firmware_download_failed">获取固件失败：%1$s</string>
+    <string name="firmware_preparing">正在准备 %1$s 固件</string>
+    <string name="firmware_source_cache">来源：本地缓存，无需重新下载</string>
+    <string name="firmware_source_network">来源：固件服务器，已保存到本地缓存</string>
+    <string name="firmware_cache_used">已使用本地缓存固件 %1$s</string>
+    <string name="firmware_cached">固件 %1$s 已下载并保存到本机</string>
+    <string name="firmware_fetch_failed_log">获取固件失败：%1$s</string>
     <string name="firmware_hardware_mismatch">固件型号 %1$s 与设备 %2$s 不匹配。</string>
     <string name="confirm_flash_title">确认刷写固件？</string>
     <string name="confirm_flash_message">将刷写 %1$s（%2$s，%3$.1f KB）。刷写期间请勿拔线或断电。</string>

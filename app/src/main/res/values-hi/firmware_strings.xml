@@ -1,0 +1,34 @@
+<resources>
+    <string name="firmware_update">फ़र्मवेयर अपडेट</string>
+    <string name="firmware_hint">पहली बार तैयारी करने पर डिवाइस से मेल खाता फ़र्मवेयर डाउनलोड होकर फ़ोन में सहेजा जाएगा; अगली बार यही बटन कैश का उपयोग करेगा। Bootloader अलग PID के साथ दोबारा जुड़ेगा, इसलिए USB अनुमति फिर देनी होगी। फ़्लैशिंग केवल BL मोड में उपलब्ध है।</string>
+    <string name="firmware_status_empty">फ़र्मवेयर अभी तैयार नहीं है।</string>
+    <string name="pull_latest_firmware">फ़र्मवेयर तैयार करें</string>
+    <string name="enter_bootloader">BL मोड में जाएँ</string>
+    <string name="exit_bootloader">BL मोड से बाहर निकलें</string>
+    <string name="flash_firmware">फ़र्मवेयर फ़्लैश करें</string>
+    <string name="confirm_enter_bl_title">Bootloader में जाएँ?</string>
+    <string name="confirm_enter_bl_message">डिवाइस डिस्कनेक्ट होकर नए USB PID के साथ फिर जुड़ेगा। Android दोबारा अनुमति माँगेगा।</string>
+    <string name="confirm_exit_bl_title">Bootloader से बाहर निकलें?</string>
+    <string name="confirm_exit_bl_message">डिवाइस APP मोड में लौटकर फिर से पहचाना जाएगा। USB अनुमति फिर माँगी जा सकती है।</string>
+    <string name="switching_to_bl">BL में जाने का आदेश भेज दिया गया। Bootloader और नई अनुमति की प्रतीक्षा है…</string>
+    <string name="switching_to_app">BL से निकलने का आदेश भेज दिया गया। APP मोड और नई अनुमति की प्रतीक्षा है…</string>
+    <string name="bootloader_connected">Bootloader %1$s कनेक्ट है · %2$s</string>
+    <string name="bootloader_too_old">Bootloader आवश्यक संस्करण 1.3.0 से पुराना है।</string>
+    <string name="firmware_fetching">कैश जाँचा जा रहा है या फ़र्मवेयर लिया जा रहा है…</string>
+    <string name="firmware_downloaded">%1$s\nसंस्करण: %2$s · हार्डवेयर: %3$s\nआकार: %4$.1f KB · फ़र्मवेयर हेडर सत्यापित</string>
+    <string name="firmware_download_failed">फ़र्मवेयर तैयार नहीं हो सका: %1$s</string>
+    <string name="firmware_preparing">%1$s फ़र्मवेयर तैयार हो रहा है</string>
+    <string name="firmware_source_cache">स्रोत: स्थानीय कैश; दोबारा डाउनलोड की जरूरत नहीं</string>
+    <string name="firmware_source_network">स्रोत: फ़र्मवेयर सर्वर; स्थानीय कैश में सहेजा गया</string>
+    <string name="firmware_cache_used">कैश किया हुआ फ़र्मवेयर %1$s उपयोग किया गया</string>
+    <string name="firmware_cached">फ़र्मवेयर %1$s डाउनलोड करके फ़ोन में सहेजा गया</string>
+    <string name="firmware_fetch_failed_log">फ़र्मवेयर तैयार नहीं हो सका: %1$s</string>
+    <string name="firmware_hardware_mismatch">फ़र्मवेयर हार्डवेयर %1$s डिवाइस %2$s से मेल नहीं खाता।</string>
+    <string name="confirm_flash_title">फ़र्मवेयर फ़्लैश करें?</string>
+    <string name="confirm_flash_message">%1$s (%2$s, %3$.1f KB) फ़्लैश होगा। प्रक्रिया के दौरान केबल या बिजली न हटाएँ।</string>
+    <string name="flashing_firmware">फ़र्मवेयर फ़्लैश हो रहा है: %1$d%%</string>
+    <string name="firmware_verifying">डेटा लिखा गया। CRC32 सत्यापित हो रहा है…</string>
+    <string name="firmware_flash_complete">फ़्लैश और CRC32 सत्यापन सफल। APP मोड और नई अनुमति की प्रतीक्षा है…</string>
+    <string name="firmware_flash_failed">फ़्लैश विफल: %1$s</string>
+    <string name="bl_permission_required">Bootloader मिला। सिस्टम संवाद में USB एक्सेस की अनुमति फिर दें।</string>
+</resources>

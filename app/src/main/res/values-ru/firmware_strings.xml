@@ -1,0 +1,34 @@
+<resources>
+    <string name="firmware_update">Обновление прошивки</string>
+    <string name="firmware_hint">При первой подготовке подходящая прошивка загружается и сохраняется на телефоне; следующие нажатия этой же кнопки используют кэш. Bootloader подключается с другим PID и требует повторного разрешения USB. Прошивка доступна только в режиме BL.</string>
+    <string name="firmware_status_empty">Прошивка не подготовлена.</string>
+    <string name="pull_latest_firmware">Подготовить прошивку</string>
+    <string name="enter_bootloader">Войти в режим BL</string>
+    <string name="exit_bootloader">Выйти из режима BL</string>
+    <string name="flash_firmware">Прошить устройство</string>
+    <string name="confirm_enter_bl_title">Перейти в Bootloader?</string>
+    <string name="confirm_enter_bl_message">Устройство отключится и появится с новым USB PID. Android повторно запросит разрешение.</string>
+    <string name="confirm_exit_bl_title">Выйти из Bootloader?</string>
+    <string name="confirm_exit_bl_message">Устройство вернётся в режим APP и будет обнаружено заново. Разрешение USB может быть запрошено повторно.</string>
+    <string name="switching_to_bl">Команда входа в BL отправлена. Ожидание Bootloader и нового разрешения…</string>
+    <string name="switching_to_app">Команда выхода из BL отправлена. Ожидание режима APP и нового разрешения…</string>
+    <string name="bootloader_connected">Bootloader %1$s подключён · %2$s</string>
+    <string name="bootloader_too_old">Версия Bootloader ниже требуемой 1.3.0.</string>
+    <string name="firmware_fetching">Проверка кэша или получение прошивки…</string>
+    <string name="firmware_downloaded">%1$s\nВерсия: %2$s · Оборудование: %3$s\nРазмер: %4$.1f КБ · Заголовок прошивки проверен</string>
+    <string name="firmware_download_failed">Не удалось подготовить прошивку: %1$s</string>
+    <string name="firmware_preparing">Подготовка прошивки %1$s</string>
+    <string name="firmware_source_cache">Источник: локальный кэш, повторная загрузка не нужна</string>
+    <string name="firmware_source_network">Источник: сервер прошивок, сохранено в локальном кэше</string>
+    <string name="firmware_cache_used">Используется прошивка %1$s из кэша</string>
+    <string name="firmware_cached">Прошивка %1$s загружена и сохранена на телефоне</string>
+    <string name="firmware_fetch_failed_log">Не удалось подготовить прошивку: %1$s</string>
+    <string name="firmware_hardware_mismatch">Оборудование прошивки %1$s не соответствует устройству %2$s.</string>
+    <string name="confirm_flash_title">Прошить устройство?</string>
+    <string name="confirm_flash_message">Будет установлена %1$s (%2$s, %3$.1f КБ). Не отключайте кабель и питание во время прошивки.</string>
+    <string name="flashing_firmware">Установка прошивки: %1$d%%</string>
+    <string name="firmware_verifying">Данные записаны. Проверка CRC32…</string>
+    <string name="firmware_flash_complete">Прошивка и проверка CRC32 выполнены. Ожидание режима APP и нового разрешения…</string>
+    <string name="firmware_flash_failed">Ошибка прошивки: %1$s</string>
+    <string name="bl_permission_required">Обнаружен Bootloader. Повторно разрешите доступ к USB в системном окне.</string>
+</resources>

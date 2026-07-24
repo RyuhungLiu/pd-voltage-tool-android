@@ -1,0 +1,34 @@
+<resources>
+    <string name="firmware_update">Pembaruan firmware</string>
+    <string name="firmware_hint">Persiapan pertama akan mengunduh firmware yang cocok dan menyimpannya di perangkat; penggunaan berikutnya memakai cache melalui tombol yang sama. Bootloader tersambung ulang dengan PID berbeda sehingga izin USB harus diberikan lagi. Flash hanya tersedia dalam mode BL.</string>
+    <string name="firmware_status_empty">Firmware belum disiapkan.</string>
+    <string name="pull_latest_firmware">Siapkan firmware</string>
+    <string name="enter_bootloader">Masuk mode BL</string>
+    <string name="exit_bootloader">Keluar dari mode BL</string>
+    <string name="flash_firmware">Flash firmware</string>
+    <string name="confirm_enter_bl_title">Masuk ke Bootloader?</string>
+    <string name="confirm_enter_bl_message">Perangkat akan terputus dan muncul kembali dengan USB PID baru. Android akan meminta izin lagi.</string>
+    <string name="confirm_exit_bl_title">Keluar dari Bootloader?</string>
+    <string name="confirm_exit_bl_message">Perangkat akan kembali ke mode APP dan dienumerasi ulang. Izin USB mungkin diminta lagi.</string>
+    <string name="switching_to_bl">Perintah masuk BL telah dikirim. Menunggu Bootloader tersambung dan izin baru…</string>
+    <string name="switching_to_app">Perintah keluar BL telah dikirim. Menunggu mode APP tersambung dan izin baru…</string>
+    <string name="bootloader_connected">Bootloader %1$s tersambung · %2$s</string>
+    <string name="bootloader_too_old">Bootloader lebih lama dari versi 1.3.0 yang diperlukan.</string>
+    <string name="firmware_fetching">Memeriksa cache atau mengambil firmware…</string>
+    <string name="firmware_downloaded">%1$s\nVersi: %2$s · Perangkat keras: %3$s\nUkuran: %4$.1f KB · Header firmware tervalidasi</string>
+    <string name="firmware_download_failed">Firmware tidak dapat disiapkan: %1$s</string>
+    <string name="firmware_preparing">Menyiapkan firmware %1$s</string>
+    <string name="firmware_source_cache">Sumber: cache lokal; tidak perlu mengunduh lagi</string>
+    <string name="firmware_source_network">Sumber: server firmware; disimpan ke cache lokal</string>
+    <string name="firmware_cache_used">Menggunakan firmware %1$s dari cache</string>
+    <string name="firmware_cached">Firmware %1$s diunduh dan disimpan secara lokal</string>
+    <string name="firmware_fetch_failed_log">Firmware tidak dapat disiapkan: %1$s</string>
+    <string name="firmware_hardware_mismatch">Perangkat keras firmware %1$s tidak cocok dengan perangkat %2$s.</string>
+    <string name="confirm_flash_title">Flash firmware?</string>
+    <string name="confirm_flash_message">Akan mem-flash %1$s (%2$s, %3$.1f KB). Jangan cabut kabel atau daya selama proses.</string>
+    <string name="flashing_firmware">Mem-flash firmware: %1$d%%</string>
+    <string name="firmware_verifying">Data telah ditulis. Memverifikasi CRC32…</string>
+    <string name="firmware_flash_complete">Flash dan verifikasi CRC32 berhasil. Menunggu mode APP dan izin baru…</string>
+    <string name="firmware_flash_failed">Flash gagal: %1$s</string>
+    <string name="bl_permission_required">Bootloader terdeteksi. Berikan lagi izin akses USB pada dialog sistem.</string>
+</resources>

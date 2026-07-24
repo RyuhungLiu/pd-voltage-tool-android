@@ -1,0 +1,34 @@
+<resources>
+    <string name="firmware_update">Mise à jour du micrologiciel</string>
+    <string name="firmware_hint">La première préparation télécharge le micrologiciel adapté et le conserve sur le téléphone. Les utilisations suivantes réemploient le cache avec le même bouton. Le Bootloader se reconnecte avec un autre PID et exige une nouvelle autorisation USB. Le flash est possible uniquement en mode BL.</string>
+    <string name="firmware_status_empty">Aucun micrologiciel préparé.</string>
+    <string name="pull_latest_firmware">Préparer le micrologiciel</string>
+    <string name="enter_bootloader">Passer en mode BL</string>
+    <string name="exit_bootloader">Quitter le mode BL</string>
+    <string name="flash_firmware">Flasher le micrologiciel</string>
+    <string name="confirm_enter_bl_title">Passer dans le Bootloader ?</string>
+    <string name="confirm_enter_bl_message">L’appareil va se déconnecter et réapparaître avec un nouveau PID USB. Android demandera une nouvelle autorisation.</string>
+    <string name="confirm_exit_bl_title">Quitter le Bootloader ?</string>
+    <string name="confirm_exit_bl_message">L’appareil reviendra en mode APP et sera réénuméré. Une nouvelle autorisation USB peut être demandée.</string>
+    <string name="switching_to_bl">Commande d’entrée en BL envoyée. Attente du Bootloader et de la nouvelle autorisation…</string>
+    <string name="switching_to_app">Commande de sortie du BL envoyée. Attente du mode APP et de la nouvelle autorisation…</string>
+    <string name="bootloader_connected">Bootloader %1$s connecté · %2$s</string>
+    <string name="bootloader_too_old">Le Bootloader est antérieur à la version 1.3.0 requise.</string>
+    <string name="firmware_fetching">Vérification du cache ou récupération du micrologiciel…</string>
+    <string name="firmware_downloaded">%1$s\nVersion : %2$s · Matériel : %3$s\nTaille : %4$.1f KB · En-tête du micrologiciel validé</string>
+    <string name="firmware_download_failed">Impossible de préparer le micrologiciel : %1$s</string>
+    <string name="firmware_preparing">Préparation du micrologiciel %1$s</string>
+    <string name="firmware_source_cache">Source : cache local, aucun téléchargement nécessaire</string>
+    <string name="firmware_source_network">Source : serveur de micrologiciel, enregistré dans le cache local</string>
+    <string name="firmware_cache_used">Utilisation du micrologiciel %1$s en cache</string>
+    <string name="firmware_cached">Micrologiciel %1$s téléchargé et enregistré localement</string>
+    <string name="firmware_fetch_failed_log">Impossible de préparer le micrologiciel : %1$s</string>
+    <string name="firmware_hardware_mismatch">Le matériel du micrologiciel %1$s ne correspond pas à l’appareil %2$s.</string>
+    <string name="confirm_flash_title">Flasher le micrologiciel ?</string>
+    <string name="confirm_flash_message">Flasher %1$s (%2$s, %3$.1f KB). Ne débranchez ni le câble ni l’alimentation pendant le flash.</string>
+    <string name="flashing_firmware">Flash du micrologiciel : %1$d%%</string>
+    <string name="firmware_verifying">Données écrites. Vérification CRC32…</string>
+    <string name="firmware_flash_complete">Flash et vérification CRC32 réussis. Attente du mode APP et de la nouvelle autorisation…</string>
+    <string name="firmware_flash_failed">Échec du flash : %1$s</string>
+    <string name="bl_permission_required">Bootloader détecté. Autorisez de nouveau l’accès USB dans la boîte de dialogue système.</string>
+</resources>

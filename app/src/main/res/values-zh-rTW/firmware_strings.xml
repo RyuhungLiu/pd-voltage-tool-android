@@ -1,0 +1,34 @@
+<resources>
+    <string name="firmware_update">韌體升級</string>
+    <string name="firmware_hint">首次準備時會下載與裝置型號相符的韌體並儲存在本機；之後點擊同一按鈕會直接使用快取。進入 Bootloader 後裝置會以新的 PID 重新連線，必須再次授權；只有 BL 模式可以刷寫。</string>
+    <string name="firmware_status_empty">尚未準備韌體。</string>
+    <string name="pull_latest_firmware">準備韌體</string>
+    <string name="enter_bootloader">進入 BL 模式</string>
+    <string name="exit_bootloader">退出 BL 模式</string>
+    <string name="flash_firmware">刷寫韌體</string>
+    <string name="confirm_enter_bl_title">進入 Bootloader？</string>
+    <string name="confirm_enter_bl_message">裝置將中斷連線並以新的 USB PID 重新連線。Android 會要求您再次授權。</string>
+    <string name="confirm_exit_bl_title">退出 Bootloader？</string>
+    <string name="confirm_exit_bl_message">裝置將返回 APP 模式並重新列舉，可能需要再次授權。</string>
+    <string name="switching_to_bl">已傳送進入 BL 命令，正在等待 Bootloader 重新連線並授權…</string>
+    <string name="switching_to_app">已傳送退出 BL 命令，正在等待 APP 模式重新連線並授權…</string>
+    <string name="bootloader_connected">Bootloader %1$s 已連線 · %2$s</string>
+    <string name="bootloader_too_old">Bootloader 版本低於刷寫所需的 1.3.0。</string>
+    <string name="firmware_fetching">正在檢查快取或取得韌體…</string>
+    <string name="firmware_downloaded">%1$s\n版本：%2$s · 型號：%3$s\n大小：%4$.1f KB · 韌體檔案標頭有效</string>
+    <string name="firmware_download_failed">無法準備韌體：%1$s</string>
+    <string name="firmware_preparing">正在準備 %1$s 韌體</string>
+    <string name="firmware_source_cache">來源：本機快取，無需重新下載</string>
+    <string name="firmware_source_network">來源：韌體伺服器，已儲存到本機快取</string>
+    <string name="firmware_cache_used">已使用本機快取韌體 %1$s</string>
+    <string name="firmware_cached">韌體 %1$s 已下載並儲存到本機</string>
+    <string name="firmware_fetch_failed_log">無法準備韌體：%1$s</string>
+    <string name="firmware_hardware_mismatch">韌體型號 %1$s 與裝置 %2$s 不相符。</string>
+    <string name="confirm_flash_title">確認刷寫韌體？</string>
+    <string name="confirm_flash_message">將刷寫 %1$s（%2$s，%3$.1f KB）。刷寫期間請勿拔線或斷電。</string>
+    <string name="flashing_firmware">正在刷寫韌體：%1$d%%</string>
+    <string name="firmware_verifying">資料已寫入，正在驗證 CRC32…</string>
+    <string name="firmware_flash_complete">刷寫與 CRC32 驗證成功，正在等待裝置返回 APP 模式並重新授權…</string>
+    <string name="firmware_flash_failed">刷寫失敗：%1$s</string>
+    <string name="bl_permission_required">已偵測到 Bootloader，請在系統對話框中再次授權 USB 存取。</string>
+</resources>

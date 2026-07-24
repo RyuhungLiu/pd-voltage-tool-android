@@ -1,0 +1,34 @@
+<resources>
+    <string name="firmware_update">Atualização de firmware</string>
+    <string name="firmware_hint">A primeira preparação transfere o firmware compatível e guarda-o no telefone; as utilizações seguintes reutilizam a cache com o mesmo botão. O Bootloader volta a ligar-se com outro PID e exige nova permissão USB. Só é possível gravar no modo BL.</string>
+    <string name="firmware_status_empty">Nenhum firmware preparado.</string>
+    <string name="pull_latest_firmware">Preparar firmware</string>
+    <string name="enter_bootloader">Entrar no modo BL</string>
+    <string name="exit_bootloader">Sair do modo BL</string>
+    <string name="flash_firmware">Gravar firmware</string>
+    <string name="confirm_enter_bl_title">Entrar no Bootloader?</string>
+    <string name="confirm_enter_bl_message">O dispositivo será desligado e reaparecerá com um novo PID USB. O Android voltará a pedir permissão.</string>
+    <string name="confirm_exit_bl_title">Sair do Bootloader?</string>
+    <string name="confirm_exit_bl_message">O dispositivo voltará ao modo APP e será novamente enumerado. A permissão USB poderá ser pedida outra vez.</string>
+    <string name="switching_to_bl">Comando de entrada em BL enviado. A aguardar o Bootloader e a nova permissão…</string>
+    <string name="switching_to_app">Comando de saída de BL enviado. A aguardar o modo APP e a nova permissão…</string>
+    <string name="bootloader_connected">Bootloader %1$s ligado · %2$s</string>
+    <string name="bootloader_too_old">O Bootloader é anterior à versão 1.3.0 necessária.</string>
+    <string name="firmware_fetching">A verificar a cache ou a obter o firmware…</string>
+    <string name="firmware_downloaded">%1$s\nVersão: %2$s · Hardware: %3$s\nTamanho: %4$.1f KB · Cabeçalho do firmware validado</string>
+    <string name="firmware_download_failed">Não foi possível preparar o firmware: %1$s</string>
+    <string name="firmware_preparing">A preparar o firmware %1$s</string>
+    <string name="firmware_source_cache">Origem: cache local, sem necessidade de nova transferência</string>
+    <string name="firmware_source_network">Origem: servidor de firmware, guardado na cache local</string>
+    <string name="firmware_cache_used">A utilizar o firmware %1$s da cache</string>
+    <string name="firmware_cached">Firmware %1$s transferido e guardado localmente</string>
+    <string name="firmware_fetch_failed_log">Não foi possível preparar o firmware: %1$s</string>
+    <string name="firmware_hardware_mismatch">O hardware do firmware %1$s não corresponde ao dispositivo %2$s.</string>
+    <string name="confirm_flash_title">Gravar o firmware?</string>
+    <string name="confirm_flash_message">Será gravado %1$s (%2$s, %3$.1f KB). Não desligue o cabo nem a alimentação durante o processo.</string>
+    <string name="flashing_firmware">A gravar firmware: %1$d%%</string>
+    <string name="firmware_verifying">Dados gravados. A verificar CRC32…</string>
+    <string name="firmware_flash_complete">Gravação e verificação CRC32 concluídas. A aguardar o modo APP e a nova permissão…</string>
+    <string name="firmware_flash_failed">Falha na gravação: %1$s</string>
+    <string name="bl_permission_required">Bootloader detetado. Volte a autorizar o acesso USB na caixa de diálogo do sistema.</string>
+</resources>

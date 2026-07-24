@@ -1,0 +1,34 @@
+<resources>
+    <string name="firmware_update">Firmware-Update</string>
+    <string name="firmware_hint">Bei der ersten Vorbereitung wird passende Firmware heruntergeladen und lokal gespeichert. Weitere Aufrufe verwenden über dieselbe Schaltfläche den Cache. Der Bootloader verbindet sich mit einer anderen PID neu und benötigt erneut die USB-Berechtigung. Flashen ist nur im BL-Modus möglich.</string>
+    <string name="firmware_status_empty">Keine Firmware vorbereitet.</string>
+    <string name="pull_latest_firmware">Firmware vorbereiten</string>
+    <string name="enter_bootloader">BL-Modus starten</string>
+    <string name="exit_bootloader">BL-Modus verlassen</string>
+    <string name="flash_firmware">Firmware flashen</string>
+    <string name="confirm_enter_bl_title">Bootloader starten?</string>
+    <string name="confirm_enter_bl_message">Das Gerät wird getrennt und mit einer neuen USB-PID wieder verbunden. Android fordert die Berechtigung erneut an.</string>
+    <string name="confirm_exit_bl_title">Bootloader verlassen?</string>
+    <string name="confirm_exit_bl_message">Das Gerät kehrt in den APP-Modus zurück und wird neu erkannt. Die USB-Berechtigung kann erneut angefordert werden.</string>
+    <string name="switching_to_bl">BL-Befehl gesendet. Warten auf Bootloader und neue Berechtigung…</string>
+    <string name="switching_to_app">BL-Ende-Befehl gesendet. Warten auf APP-Modus und neue Berechtigung…</string>
+    <string name="bootloader_connected">Bootloader %1$s verbunden · %2$s</string>
+    <string name="bootloader_too_old">Der Bootloader ist älter als die erforderliche Version 1.3.0.</string>
+    <string name="firmware_fetching">Cache wird geprüft oder Firmware abgerufen…</string>
+    <string name="firmware_downloaded">%1$s\nVersion: %2$s · Hardware: %3$s\nGröße: %4$.1f KB · Firmware-Header geprüft</string>
+    <string name="firmware_download_failed">Firmware konnte nicht vorbereitet werden: %1$s</string>
+    <string name="firmware_preparing">%1$s-Firmware wird vorbereitet</string>
+    <string name="firmware_source_cache">Quelle: lokaler Cache, kein erneuter Download nötig</string>
+    <string name="firmware_source_network">Quelle: Firmware-Server, lokal zwischengespeichert</string>
+    <string name="firmware_cache_used">Firmware %1$s aus dem Cache wird verwendet</string>
+    <string name="firmware_cached">Firmware %1$s wurde heruntergeladen und lokal gespeichert</string>
+    <string name="firmware_fetch_failed_log">Firmware konnte nicht vorbereitet werden: %1$s</string>
+    <string name="firmware_hardware_mismatch">Firmware-Hardware %1$s stimmt nicht mit Gerät %2$s überein.</string>
+    <string name="confirm_flash_title">Firmware flashen?</string>
+    <string name="confirm_flash_message">%1$s (%2$s, %3$.1f KB) wird geflasht. Kabel und Stromversorgung währenddessen nicht trennen.</string>
+    <string name="flashing_firmware">Firmware wird geflasht: %1$d%%</string>
+    <string name="firmware_verifying">Daten geschrieben. CRC32 wird geprüft…</string>
+    <string name="firmware_flash_complete">Flashen und CRC32-Prüfung erfolgreich. Warten auf APP-Modus und neue Berechtigung…</string>
+    <string name="firmware_flash_failed">Flashen fehlgeschlagen: %1$s</string>
+    <string name="bl_permission_required">Bootloader erkannt. USB-Zugriff im Systemdialog erneut erlauben.</string>
+</resources>

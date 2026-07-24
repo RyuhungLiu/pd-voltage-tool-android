@@ -1,0 +1,34 @@
+<resources>
+    <string name="firmware_update">อัปเดตเฟิร์มแวร์</string>
+    <string name="firmware_hint">การเตรียมครั้งแรกจะดาวน์โหลดเฟิร์มแวร์ที่ตรงกับอุปกรณ์และบันทึกไว้ในเครื่อง ครั้งถัดไปปุ่มเดิมจะใช้แคช Bootloader จะเชื่อมต่อใหม่ด้วย PID อื่นและต้องอนุญาต USB อีกครั้ง โดยเขียนเฟิร์มแวร์ได้เฉพาะโหมด BL</string>
+    <string name="firmware_status_empty">ยังไม่ได้เตรียมเฟิร์มแวร์</string>
+    <string name="pull_latest_firmware">เตรียมเฟิร์มแวร์</string>
+    <string name="enter_bootloader">เข้าโหมด BL</string>
+    <string name="exit_bootloader">ออกจากโหมด BL</string>
+    <string name="flash_firmware">เขียนเฟิร์มแวร์</string>
+    <string name="confirm_enter_bl_title">เข้า Bootloader หรือไม่</string>
+    <string name="confirm_enter_bl_message">อุปกรณ์จะตัดการเชื่อมต่อและเชื่อมต่อใหม่ด้วย USB PID ใหม่ Android จะขอสิทธิ์อีกครั้ง</string>
+    <string name="confirm_exit_bl_title">ออกจาก Bootloader หรือไม่</string>
+    <string name="confirm_exit_bl_message">อุปกรณ์จะกลับสู่โหมด APP และตรวจพบใหม่ อาจต้องอนุญาต USB อีกครั้ง</string>
+    <string name="switching_to_bl">ส่งคำสั่งเข้า BL แล้ว กำลังรอ Bootloader เชื่อมต่อใหม่และขอสิทธิ์…</string>
+    <string name="switching_to_app">ส่งคำสั่งออกจาก BL แล้ว กำลังรอโหมด APP เชื่อมต่อใหม่และขอสิทธิ์…</string>
+    <string name="bootloader_connected">เชื่อมต่อ Bootloader %1$s แล้ว · %2$s</string>
+    <string name="bootloader_too_old">Bootloader เก่ากว่าเวอร์ชัน 1.3.0 ที่จำเป็น</string>
+    <string name="firmware_fetching">กำลังตรวจสอบแคชหรือดึงเฟิร์มแวร์…</string>
+    <string name="firmware_downloaded">%1$s\nเวอร์ชัน: %2$s · ฮาร์ดแวร์: %3$s\nขนาด: %4$.1f KB · ตรวจสอบส่วนหัวเฟิร์มแวร์แล้ว</string>
+    <string name="firmware_download_failed">เตรียมเฟิร์มแวร์ไม่ได้: %1$s</string>
+    <string name="firmware_preparing">กำลังเตรียมเฟิร์มแวร์ %1$s</string>
+    <string name="firmware_source_cache">แหล่งที่มา: แคชในเครื่อง ไม่ต้องดาวน์โหลดซ้ำ</string>
+    <string name="firmware_source_network">แหล่งที่มา: เซิร์ฟเวอร์เฟิร์มแวร์ บันทึกในแคชแล้ว</string>
+    <string name="firmware_cache_used">ใช้เฟิร์มแวร์ %1$s จากแคช</string>
+    <string name="firmware_cached">ดาวน์โหลดเฟิร์มแวร์ %1$s และบันทึกในเครื่องแล้ว</string>
+    <string name="firmware_fetch_failed_log">เตรียมเฟิร์มแวร์ไม่ได้: %1$s</string>
+    <string name="firmware_hardware_mismatch">ฮาร์ดแวร์เฟิร์มแวร์ %1$s ไม่ตรงกับอุปกรณ์ %2$s</string>
+    <string name="confirm_flash_title">ยืนยันการเขียนเฟิร์มแวร์หรือไม่</string>
+    <string name="confirm_flash_message">จะเขียน %1$s (%2$s, %3$.1f KB) ห้ามถอดสายหรือตัดไฟระหว่างดำเนินการ</string>
+    <string name="flashing_firmware">กำลังเขียนเฟิร์มแวร์: %1$d%%</string>
+    <string name="firmware_verifying">เขียนข้อมูลแล้ว กำลังตรวจสอบ CRC32…</string>
+    <string name="firmware_flash_complete">เขียนและตรวจสอบ CRC32 สำเร็จ กำลังรอโหมด APP และการอนุญาตใหม่…</string>
+    <string name="firmware_flash_failed">เขียนไม่สำเร็จ: %1$s</string>
+    <string name="bl_permission_required">ตรวจพบ Bootloader โปรดอนุญาตการเข้าถึง USB อีกครั้งในหน้าต่างระบบ</string>
+</resources>

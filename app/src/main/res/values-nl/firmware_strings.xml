@@ -1,0 +1,34 @@
+<resources>
+    <string name="firmware_update">Firmware-update</string>
+    <string name="firmware_hint">Bij de eerste voorbereiding wordt passende firmware gedownload en lokaal opgeslagen. Volgende keren gebruikt dezelfde knop de cache. De Bootloader maakt opnieuw verbinding met een andere PID en vraagt opnieuw USB-toestemming. Flashen kan alleen in de BL-modus.</string>
+    <string name="firmware_status_empty">Geen firmware voorbereid.</string>
+    <string name="pull_latest_firmware">Firmware voorbereiden</string>
+    <string name="enter_bootloader">BL-modus openen</string>
+    <string name="exit_bootloader">BL-modus afsluiten</string>
+    <string name="flash_firmware">Firmware flashen</string>
+    <string name="confirm_enter_bl_title">Bootloader openen?</string>
+    <string name="confirm_enter_bl_message">Het apparaat wordt losgekoppeld en verschijnt opnieuw met een nieuwe USB-PID. Android vraagt opnieuw om toestemming.</string>
+    <string name="confirm_exit_bl_title">Bootloader afsluiten?</string>
+    <string name="confirm_exit_bl_message">Het apparaat keert terug naar de APP-modus en wordt opnieuw gedetecteerd. USB-toestemming kan opnieuw worden gevraagd.</string>
+    <string name="switching_to_bl">Opdracht voor BL-modus verzonden. Wachten op Bootloader en nieuwe toestemming…</string>
+    <string name="switching_to_app">Opdracht om BL af te sluiten verzonden. Wachten op APP-modus en nieuwe toestemming…</string>
+    <string name="bootloader_connected">Bootloader %1$s verbonden · %2$s</string>
+    <string name="bootloader_too_old">De Bootloader is ouder dan de vereiste versie 1.3.0.</string>
+    <string name="firmware_fetching">Cache controleren of firmware ophalen…</string>
+    <string name="firmware_downloaded">%1$s\nVersie: %2$s · Hardware: %3$s\nGrootte: %4$.1f KB · Firmwareheader gevalideerd</string>
+    <string name="firmware_download_failed">Firmware kon niet worden voorbereid: %1$s</string>
+    <string name="firmware_preparing">%1$s-firmware voorbereiden</string>
+    <string name="firmware_source_cache">Bron: lokale cache, opnieuw downloaden is niet nodig</string>
+    <string name="firmware_source_network">Bron: firmwareserver, opgeslagen in lokale cache</string>
+    <string name="firmware_cache_used">Firmware %1$s uit de cache gebruiken</string>
+    <string name="firmware_cached">Firmware %1$s gedownload en lokaal opgeslagen</string>
+    <string name="firmware_fetch_failed_log">Firmware kon niet worden voorbereid: %1$s</string>
+    <string name="firmware_hardware_mismatch">Firmwarehardware %1$s komt niet overeen met apparaat %2$s.</string>
+    <string name="confirm_flash_title">Firmware flashen?</string>
+    <string name="confirm_flash_message">%1$s (%2$s, %3$.1f KB) wordt geflasht. Koppel kabel of voeding niet los tijdens het flashen.</string>
+    <string name="flashing_firmware">Firmware flashen: %1$d%%</string>
+    <string name="firmware_verifying">Gegevens geschreven. CRC32 controleren…</string>
+    <string name="firmware_flash_complete">Flashen en CRC32-controle geslaagd. Wachten op APP-modus en nieuwe toestemming…</string>
+    <string name="firmware_flash_failed">Flashen mislukt: %1$s</string>
+    <string name="bl_permission_required">Bootloader gedetecteerd. Geef USB-toegang opnieuw toestemming in het systeemvenster.</string>
+</resources>

@@ -47,9 +47,9 @@
     <string name="language_system_default">System default</string>
 
     <string name="firmware_update">Firmware update</string>
-    <string name="firmware_hint">Fetch firmware matching the device first. Bootloader uses a different PID and requires a new USB permission grant. Flashing is enabled only in BL mode.</string>
-    <string name="firmware_status_empty">No firmware fetched.</string>
-    <string name="pull_latest_firmware">Fetch latest firmware</string>
+    <string name="firmware_hint">The first preparation downloads matching firmware and saves it locally. Later taps reuse the cache. Bootloader uses a different PID and requires a new USB permission grant; flashing is enabled only in BL mode.</string>
+    <string name="firmware_status_empty">No firmware prepared.</string>
+    <string name="pull_latest_firmware">Prepare firmware</string>
     <string name="enter_bootloader">Enter BL mode</string>
     <string name="exit_bootloader">Exit BL mode</string>
     <string name="flash_firmware">Flash firmware</string>
@@ -61,9 +61,15 @@
     <string name="switching_to_app">Exit-BL command sent. Waiting for APP mode and a new permission grant…</string>
     <string name="bootloader_connected">Bootloader %1$s connected · %2$s</string>
     <string name="bootloader_too_old">Bootloader is older than the required version 1.3.0.</string>
-    <string name="firmware_fetching">Fetching latest firmware…</string>
+    <string name="firmware_fetching">Checking cache or fetching firmware…</string>
     <string name="firmware_downloaded">%1$s\nVersion: %2$s · Hardware: %3$s\nSize: %4$.1f KB · Firmware header validated</string>
-    <string name="firmware_download_failed">Firmware fetch failed: %1$s</string>
+    <string name="firmware_download_failed">Could not prepare firmware: %1$s</string>
+    <string name="firmware_preparing">Preparing %1$s firmware</string>
+    <string name="firmware_source_cache">Source: local cache; no download needed</string>
+    <string name="firmware_source_network">Source: firmware server; saved to local cache</string>
+    <string name="firmware_cache_used">Using cached firmware %1$s</string>
+    <string name="firmware_cached">Firmware %1$s downloaded and saved locally</string>
+    <string name="firmware_fetch_failed_log">Could not prepare firmware: %1$s</string>
     <string name="firmware_hardware_mismatch">Firmware hardware %1$s does not match device %2$s.</string>
     <string name="confirm_flash_title">Flash firmware?</string>
     <string name="confirm_flash_message">Flash %1$s (%2$s, %3$.1f KB). Do not unplug or remove power during flashing.</string>

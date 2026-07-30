@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">PD 電壓工具</string>
     <string name="title">PD 電壓工具</string>
-    <string name="subtitle">USB HID 控制版 · v0.4.1</string>
+    <string name="subtitle">USB HID 控制版 · v0.4.2</string>
     <string name="tab_control">調壓</string>
     <string name="tab_system">系統</string>
     <string name="tab_tools">工具</string>
@@ -124,4 +124,3 @@
     <string name="clear_log">清除日誌</string>
     <string name="log_empty">尚無操作記錄。</string>
 </resources>
-

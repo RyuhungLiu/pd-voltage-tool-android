@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/topPanel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#F4F6FA"
@@ -553,6 +554,7 @@
     </ViewFlipper>
 
     <LinearLayout
+        android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bottom_nav_background"
@@ -566,6 +568,3 @@
         <Button android:id="@+id/tabTools" style="@style/Widget.Pd.TabButton" android:layout_width="0dp" android:layout_height="58dp" android:layout_weight="1" android:text="@string/tab_tools" />
     </LinearLayout>
 </LinearLayout>
-
-
-

@@ -17,6 +17,7 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -104,6 +105,7 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        applySystemBarInsets()
 
         firmwareCache = FirmwareCache(this)
         usbManager = getSystemService(USB_SERVICE) as UsbManager
@@ -129,6 +131,51 @@ class MainActivity : Activity() {
         }
         ioExecutor.shutdown()
         super.onDestroy()
+    }
+
+    @Suppress("DEPRECATION")
+    private fun applySystemBarInsets() {
+        val root = binding.root
+        val topPanel = binding.topPanel
+        val bottomNavigation = binding.bottomNavigation
+        val rootLeft = root.paddingLeft
+        val rootRight = root.paddingRight
+        val topPadding = topPanel.paddingTop
+        val bottomPadding = bottomNavigation.paddingBottom
+
+        root.setOnApplyWindowInsetsListener { _, insets ->
+            val leftInset: Int
+            val topInset: Int
+            val rightInset: Int
+            val bottomInset: Int
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                val systemBars = insets.getInsets(WindowInsets.Type.systemBars())
+                leftInset = systemBars.left
+                topInset = systemBars.top
+                rightInset = systemBars.right
+                bottomInset = systemBars.bottom
+            } else {
+                leftInset = insets.systemWindowInsetLeft
+                topInset = insets.systemWindowInsetTop
+                rightInset = insets.systemWindowInsetRight
+                bottomInset = insets.systemWindowInsetBottom
+            }
+            root.setPadding(rootLeft + leftInset, root.paddingTop, rootRight + rightInset, root.paddingBottom)
+            topPanel.setPadding(
+                topPanel.paddingLeft,
+                topPadding + topInset,
+                topPanel.paddingRight,
+                topPanel.paddingBottom,
+            )
+            bottomNavigation.setPadding(
+                bottomNavigation.paddingLeft,
+                bottomNavigation.paddingTop,
+                bottomNavigation.paddingRight,
+                bottomPadding + bottomInset,
+            )
+            insets
+        }
+        root.requestApplyInsets()
     }
 
     private fun setupNavigation() {
@@ -1145,4 +1192,3 @@ class MainActivity : Activity() {
         private const val PAGE_TOOLS = 2
     }
 }
-

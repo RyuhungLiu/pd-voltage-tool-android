@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tab_home">Start</string>
+  <string name="usage_mode">Nutzungsmodus</string>
+  <string name="simple_mode">Einfach</string>
+  <string name="professional_mode">Profi</string>
+  <string name="simple_mode_hint">Häufige Spannungen und geführte Firmware-Aktualisierung.</string>
+  <string name="professional_mode_hint">Systemparameter, MIPPS, alle Firmware-Werkzeuge und Protokolle.</string>
+  <string name="enter_professional_mode">Profi</string>
+  <string name="enter_simple_mode">Einfach</string>
+  <string name="switch_to_simple_mode">Zum einfachen Modus</string>
+  <string name="current_negotiation_warning">Spannung: PPS nutzt 0,02-V-Schritte, AVS (SPR oder EPR) 0,1-V-Schritte. Ein unpassender Wert kann die Aushandlung verhindern.</string>
+  <string name="led_explanation_title">LED-Erklärung</string><string name="led_explanation_body">Dauerlicht bedeutet erfolgreiche Aushandlung des gewünschten Profils; pulsierendes Licht bedeutet Fehlschlag. Meist fehlen PDO-Daten. Prüfen Sie AC-Kabel, das angeforderte Profil in den PDO-Daten und die Angaben auf dem Ladegerät.</string>
+  <string name="quick_preset_long_press_hint">Tippen zum Einsetzen; gedrückt halten zum Bearbeiten oder Favorisieren.</string>
+  <string name="edit_quick_preset">Häufige Spannung bearbeiten</string>
+  <string name="favorite_preset">Favorit (zuerst anzeigen)</string>
+  <string name="restore_default">Standard wiederherstellen</string>
+  <string name="save">Speichern</string>
+  <string name="simple_firmware_title">Firmware-Update</string>
+  <string name="simple_firmware_connect_reason">PD-HID-Gerät verbinden, um die Firmware zu prüfen.</string><string name="simple_firmware_permission_reason">Zuerst USB-Zugriff auf das aktuelle Gerät erlauben.</string><string name="simple_firmware_prepare_reason">Firmware nicht bereit; lokaler Cache wird zuerst verwendet.</string><string name="simple_firmware_bl_reason">Bootloader verbunden; USB-Zugriff erneut erlauben.</string><string name="simple_firmware_flash_ready">Bootloader und Firmware sind zum Flashen bereit.</string><string name="simple_firmware_sync_reason">Zuerst den Gerätestatus synchronisieren.</string><string name="simple_firmware_enter_bl_ready">Firmware bereit; BL-Modus starten und erneut autorisieren.</string>
+</resources>

@@ -11,8 +11,8 @@ android {
         applicationId = "com.pdtool.voltage"
         minSdk = 26
         targetSdk = 36
-        versionCode = 6
-        versionName = "0.4.2"
+        versionCode = 8
+        versionName = "0.6.0"
     }
 
     buildTypes {
@@ -38,4 +38,8 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+}
+
+dependencies {
+    testImplementation("junit:junit:4.13.2")
 }

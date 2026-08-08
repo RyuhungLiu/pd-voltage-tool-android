@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tab_home">홈</string>
+  <string name="usage_mode">사용 모드</string>
+  <string name="simple_mode">간편 모드</string>
+  <string name="professional_mode">전문가 모드</string>
+  <string name="simple_mode_hint">일상용 전압 조절과 안내형 펌웨어 업데이트입니다.</string>
+  <string name="professional_mode_hint">시스템 설정, MIPPS, 전체 펌웨어 도구와 로그를 표시합니다.</string>
+  <string name="enter_professional_mode">전문가</string>
+  <string name="enter_simple_mode">간편</string>
+  <string name="switch_to_simple_mode">간편 모드로 전환</string>
+  <string name="current_negotiation_warning">전압 설정: PPS는 0.02V, AVS(SPR 또는 EPR)는 0.1V 단위입니다. 단위에 맞지 않는 값은 협상에 실패할 수 있습니다.</string>
+  <string name="led_explanation_title">LED 안내</string><string name="led_explanation_body">계속 켜짐은 지정 프로필 협상 성공, 숨쉬기 점멸은 실패를 뜻합니다. 실패는 보통 PDO 정보가 없기 때문입니다. AC 케이블 사용 여부, PDO에 요청 프로필이 있는지, 충전기 명판에 해당 프로필이 표시됐는지 확인하세요.</string>
+  <string name="quick_preset_long_press_hint">탭하여 입력하고 길게 눌러 편집하거나 즐겨찾기합니다.</string>
+  <string name="edit_quick_preset">자주 쓰는 전압 편집</string>
+  <string name="favorite_preset">즐겨찾기(먼저 표시)</string>
+  <string name="restore_default">기본값 복원</string>
+  <string name="save">저장</string>
+  <string name="simple_firmware_title">펌웨어 업데이트</string>
+  <string name="simple_firmware_connect_reason">PD HID 장치를 연결하면 펌웨어를 확인할 수 있습니다.</string><string name="simple_firmware_permission_reason">현재 USB 장치 접근을 먼저 허용하세요.</string><string name="simple_firmware_prepare_reason">펌웨어가 준비되지 않았습니다. 로컬 캐시를 먼저 사용합니다.</string><string name="simple_firmware_bl_reason">Bootloader가 연결되었습니다. USB를 다시 허용하세요.</string><string name="simple_firmware_flash_ready">Bootloader와 펌웨어가 플래시 준비되었습니다.</string><string name="simple_firmware_sync_reason">장치 상태를 먼저 동기화하세요.</string><string name="simple_firmware_enter_bl_ready">펌웨어 준비 완료. BL 모드로 전환 후 다시 허용하세요.</string>
+</resources>

@@ -14,6 +14,7 @@ import android.hardware.usb.UsbManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
+import android.provider.OpenableColumns
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -21,8 +22,12 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Spinner
 import com.pdtool.voltage.databinding.ActivityMainBinding
+import java.io.ByteArrayOutputStream
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.time.LocalTime
@@ -39,6 +44,10 @@ class MainActivity : Activity() {
     private val logLines = ArrayDeque<String>()
     private val firmwareRepository = FirmwareRepository()
     private lateinit var firmwareCache: FirmwareCache
+    private lateinit var userPreferences: UserPreferences
+    private var usageMode = UsageMode.SIMPLE
+    private var quickPresets = QuickPreset.DEFAULTS
+    private var displayedPresetSlots = QuickPreset.DEFAULTS.indices.toList()
 
     @Volatile
     private var session: UsbHidSession? = null
@@ -49,6 +58,8 @@ class MainActivity : Activity() {
     private var firmwareRelease: FirmwareRepository.Release? = null
     private var firmwareImage: FirmwareProtocol.Image? = null
     private var firmwareFromCache = false
+    private var mippsImport: XiaomiCsvParser.Result? = null
+    private var mippsFileName: String? = null
     private var awaitingMode: UsbMode? = null
     private var pendingPermissionDeviceName: String? = null
 
@@ -108,12 +119,17 @@ class MainActivity : Activity() {
         applySystemBarInsets()
 
         firmwareCache = FirmwareCache(this)
+        userPreferences = UserPreferences(this)
+        usageMode = userPreferences.usageMode()
+        quickPresets = userPreferences.quickPresets()
         usbManager = getSystemService(USB_SERVICE) as UsbManager
         registerUsbReceiver()
         setupSpinners()
         setupNavigation()
         setupInputPreview()
         setupActions()
+        renderUsageMode()
+        renderQuickPresets()
         showPage(PAGE_CONTROL)
         refreshUsbDevices(autoConnect = true)
     }
@@ -185,12 +201,13 @@ class MainActivity : Activity() {
     }
 
     private fun showPage(page: Int) {
+        val targetPage = if (usageMode == UsageMode.SIMPLE) PAGE_CONTROL else page
         binding.root.isFocusableInTouchMode = true
         binding.root.requestFocus()
-        binding.pageFlipper.displayedChild = page
-        styleTab(binding.tabControl, page == PAGE_CONTROL)
-        styleTab(binding.tabSystem, page == PAGE_SYSTEM)
-        styleTab(binding.tabTools, page == PAGE_TOOLS)
+        binding.pageFlipper.displayedChild = targetPage
+        styleTab(binding.tabControl, targetPage == PAGE_CONTROL)
+        styleTab(binding.tabSystem, targetPage == PAGE_SYSTEM)
+        styleTab(binding.tabTools, targetPage == PAGE_TOOLS)
     }
 
     private fun styleTab(button: Button, selected: Boolean) {
@@ -225,10 +242,17 @@ class MainActivity : Activity() {
     }
 
     private fun setupInputPreview() {
+        binding.voltageInput.setText(userPreferences.lastVoltage())
+        binding.currentInput.setText(userPreferences.lastCurrent())
         val watcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = updatePowerPreview()
-            override fun afterTextChanged(s: Editable?) = Unit
+            override fun afterTextChanged(s: Editable?) {
+                userPreferences.saveLastPreset(
+                    binding.voltageInput.text.toString(),
+                    binding.currentInput.text.toString(),
+                )
+            }
         }
         binding.voltageInput.addTextChangedListener(watcher)
         binding.currentInput.addTextChangedListener(watcher)
@@ -236,6 +260,8 @@ class MainActivity : Activity() {
     }
 
     private fun setupActions() {
+        binding.toggleUsageModeButton.setOnClickListener { toggleUsageMode() }
+        binding.settingsUsageModeButton.setOnClickListener { toggleUsageMode() }
         binding.applyLanguageButton.setOnClickListener {
             val tag = LANGUAGE_TAGS[binding.languageSpinner.selectedItemPosition]
             if (tag != AppLocale.currentTag(this)) {
@@ -251,22 +277,143 @@ class MainActivity : Activity() {
         binding.mcuRebootButton.setOnClickListener { confirmMcuReboot() }
         binding.usbPdRebootButton.setOnClickListener { confirmUsbPdReboot() }
         binding.pullFirmwareButton.setOnClickListener { pullLatestFirmware() }
+        binding.simpleFirmwareButton.setOnClickListener { performSimpleFirmwareAction() }
         binding.bootloaderButton.setOnClickListener { confirmBootloaderTransition() }
         binding.flashFirmwareButton.setOnClickListener { confirmFlashFirmware() }
+        binding.selectMippsCsvButton.setOnClickListener { selectMippsCsv() }
+        binding.writeMippsSlot0Button.setOnClickListener { confirmWriteMippsSlot0() }
         binding.clearLogButton.setOnClickListener {
             logLines.clear()
             binding.eventLogText.text = getString(R.string.log_empty)
         }
 
-        mapOf(
-            binding.quick5Button to "5.00",
-            binding.quick9Button to "9.00",
-            binding.quick12Button to "12.00",
-            binding.quick15Button to "15.00",
-            binding.quick20Button to "20.00",
-            binding.quick28Button to "28.00",
-        ).forEach { (button, value) ->
-            button.setOnClickListener { binding.voltageInput.setText(value) }
+        quickPresetButtons().forEachIndexed { displayIndex, button ->
+            button.setOnClickListener { applyQuickPreset(displayedPresetSlots[displayIndex]) }
+            button.setOnLongClickListener {
+                showQuickPresetEditor(displayedPresetSlots[displayIndex])
+                true
+            }
+        }
+    }
+
+    private fun quickPresetButtons(): List<Button> = listOf(
+        binding.quick5Button,
+        binding.quick9Button,
+        binding.quick12Button,
+        binding.quick15Button,
+        binding.quick18Button,
+        binding.quick20Button,
+        binding.quick24Button,
+        binding.quick28Button,
+    )
+
+    private fun renderQuickPresets() {
+        displayedPresetSlots = QuickPreset.favoriteFirst(quickPresets)
+        quickPresetButtons().forEachIndexed { displayIndex, button ->
+            val preset = quickPresets[displayedPresetSlots[displayIndex]]
+            val star = if (preset.favorite) "★ " else ""
+            button.text = "$star${compactValue(preset.voltageMv)}V\n${compactValue(preset.currentMa)}A"
+        }
+    }
+
+    private fun compactValue(value: Int): String = if (value % 1_000 == 0) {
+        (value / 1_000).toString()
+    } else {
+        BigDecimal(value).divide(BigDecimal(1_000)).stripTrailingZeros().toPlainString()
+    }
+
+    private fun applyQuickPreset(slot: Int) {
+        val preset = quickPresets[slot]
+        binding.voltageInput.setText(formatVoltage(preset.voltageMv))
+        binding.currentInput.setText(formatCurrent(preset.currentMa))
+    }
+
+    private fun showQuickPresetEditor(slot: Int) {
+        val preset = quickPresets[slot]
+        val padding = (20 * resources.displayMetrics.density).toInt()
+        val container = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(padding, 0, padding, 0)
+        }
+        val voltageInput = EditText(this).apply {
+            hint = getString(R.string.voltage_label)
+            inputType = android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
+            setText(formatVoltage(preset.voltageMv))
+        }
+        val currentInput = EditText(this).apply {
+            hint = getString(R.string.current_label)
+            inputType = android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
+            setText(formatCurrent(preset.currentMa))
+        }
+        val favoriteInput = CheckBox(this).apply {
+            text = getString(R.string.favorite_preset)
+            isChecked = preset.favorite
+        }
+        container.addView(voltageInput)
+        container.addView(currentInput)
+        container.addView(favoriteInput)
+        val dialog = AlertDialog.Builder(this)
+            .setTitle(R.string.edit_quick_preset)
+            .setView(container)
+            .setNeutralButton(R.string.restore_default, null)
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(R.string.save, null)
+            .create()
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                val voltageMv = parseScaledInput(voltageInput.text.toString(), 1_000)
+                val currentMa = parseScaledInput(currentInput.text.toString(), 1_000)
+                when {
+                    voltageMv == null || voltageMv !in MIN_VOLTAGE_MV..MAX_VOLTAGE_MV || voltageMv % 20 != 0 ->
+                        voltageInput.error = getString(R.string.invalid_voltage)
+                    currentMa == null || currentMa !in MIN_CURRENT_MA..MAX_CURRENT_MA || currentMa % 100 != 0 ->
+                        currentInput.error = getString(R.string.invalid_current)
+                    else -> {
+                        val edited = QuickPreset(voltageMv, currentMa, favoriteInput.isChecked)
+                        quickPresets = quickPresets.toMutableList().also { it[slot] = edited }
+                        userPreferences.saveQuickPreset(slot, edited)
+                        renderQuickPresets()
+                        dialog.dismiss()
+                    }
+                }
+            }
+            dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
+                userPreferences.resetQuickPreset(slot)
+                quickPresets = userPreferences.quickPresets()
+                renderQuickPresets()
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
+    }
+
+    private fun toggleUsageMode() {
+        usageMode = if (usageMode == UsageMode.SIMPLE) UsageMode.PROFESSIONAL else UsageMode.SIMPLE
+        userPreferences.setUsageMode(usageMode)
+        renderUsageMode()
+        showPage(if (usageMode == UsageMode.SIMPLE) PAGE_CONTROL else PAGE_TOOLS)
+    }
+
+    private fun renderUsageMode() {
+        val simple = usageMode == UsageMode.SIMPLE
+        binding.usageModeTitle.setText(if (simple) R.string.simple_mode else R.string.professional_mode)
+        binding.usageModeHint.setText(if (simple) R.string.simple_mode_hint else R.string.professional_mode_hint)
+        binding.toggleUsageModeButton.setText(if (simple) R.string.enter_professional_mode else R.string.enter_simple_mode)
+        binding.settingsUsageModeButton.setText(if (simple) R.string.enter_professional_mode else R.string.switch_to_simple_mode)
+        binding.tabControl.setText(if (simple) R.string.tab_home else R.string.tab_control)
+        binding.tabSystem.visibility = if (simple) View.GONE else View.VISIBLE
+        binding.tabTools.visibility = if (simple) View.GONE else View.VISIBLE
+        binding.simpleLedExplanationCard.visibility = if (simple) View.VISIBLE else View.GONE
+        binding.simpleFirmwareCard.visibility = if (simple) View.VISIBLE else View.GONE
+    }
+
+    private fun performSimpleFirmwareAction() {
+        val device = supportedDevice()
+        when {
+            firmwareImage == null -> pullLatestFirmware()
+            device != null && isBootloaderDevice(device) -> confirmFlashFirmware()
+            device != null && isSupportedAppDevice(device) -> confirmBootloaderTransition()
+            else -> refreshUsbDevices(autoConnect = true)
         }
     }
 
@@ -281,6 +428,81 @@ class MainActivity : Activity() {
         } else {
             @Suppress("UnspecifiedRegisterReceiverFlag")
             registerReceiver(usbReceiver, filter)
+        }
+    }
+
+    @Deprecated("Android framework activity result API")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode != REQUEST_MIPPS_CSV || resultCode != RESULT_OK) return
+        val uri = data?.data ?: return
+        val name = displayName(uri) ?: getString(R.string.mipps_unknown_file)
+        mippsImport = null
+        mippsFileName = null
+        binding.mippsStatus.text = getString(R.string.mipps_parsing, name)
+        binding.mippsProgress.visibility = View.VISIBLE
+        binding.mippsProgress.isIndeterminate = true
+        isBusy = true
+        updateEnabledState()
+        ioExecutor.execute {
+            try {
+                val bytes = readDocument(uri, XiaomiCsvParser.MAX_FILE_BYTES)
+                val parsed = XiaomiCsvParser.parse(bytes)
+                runOnUiThread {
+                    mippsImport = parsed
+                    mippsFileName = name
+                    binding.mippsProgress.visibility = View.GONE
+                    binding.mippsProgress.isIndeterminate = false
+                    binding.mippsStatus.text = mippsPreview(name, parsed)
+                    appendLog(getString(R.string.mipps_parsed_log, name))
+                    isBusy = false
+                    updateEnabledState()
+                }
+            } catch (error: Throwable) {
+                runOnUiThread {
+                    val message = error.message ?: error.javaClass.simpleName
+                    binding.mippsProgress.visibility = View.GONE
+                    binding.mippsProgress.isIndeterminate = false
+                    binding.mippsStatus.text = getString(R.string.mipps_parse_failed, message)
+                    appendLog(getString(R.string.mipps_parse_failed, message))
+                    isBusy = false
+                    updateEnabledState()
+                }
+            }
+        }
+    }
+
+    private fun selectMippsCsv() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "text/*"
+        }
+        @Suppress("DEPRECATION")
+        startActivityForResult(intent, REQUEST_MIPPS_CSV)
+    }
+
+    private fun displayName(uri: android.net.Uri): String? =
+        contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)?.use { cursor ->
+            if (cursor.moveToFirst()) cursor.getString(0) else null
+        }
+
+    private fun readDocument(uri: android.net.Uri, maxBytes: Int): ByteArray {
+        contentResolver.query(uri, arrayOf(OpenableColumns.SIZE), null, null, null)?.use { cursor ->
+            if (cursor.moveToFirst() && !cursor.isNull(0)) {
+                require(cursor.getLong(0) <= maxBytes) { "CSV exceeds the 2 MiB limit" }
+            }
+        }
+        val input = contentResolver.openInputStream(uri) ?: error("Unable to open selected CSV")
+        return input.use {
+            val output = ByteArrayOutputStream()
+            val buffer = ByteArray(8 * 1024)
+            while (true) {
+                val count = it.read(buffer)
+                if (count < 0) break
+                require(output.size() + count <= maxBytes) { "CSV exceeds the 2 MiB limit" }
+                output.write(buffer, 0, count)
+            }
+            output.toByteArray()
         }
     }
 
@@ -650,6 +872,89 @@ class MainActivity : Activity() {
             }
             if (isEmpty()) append(getString(R.string.firmware_status_empty))
         }
+        binding.simpleFirmwareStatus.text = binding.firmwareStatus.text
+    }
+
+    private fun mippsPreview(fileName: String, result: XiaomiCsvParser.Result): String {
+        val segmentText = result.segments.joinToString("\n") { segment ->
+            val vdos = segment.vdos.joinToString("  ") {
+                it.toString(16).uppercase().padStart(8, '0')
+            }
+            "${segment.label} · $vdos"
+        }
+        return getString(
+            R.string.mipps_parsed,
+            fileName,
+            result.slot0.size,
+            MippsProtocol.crc16CcittFalse(result.slot0),
+            getString(if (result.needs010aResend) R.string.mipps_yes else R.string.mipps_no),
+            segmentText,
+        )
+    }
+
+    private fun confirmWriteMippsSlot0() {
+        val device = supportedDevice()?.takeIf(::isSupportedAppDevice) ?: return
+        val result = mippsImport ?: return
+        val fileName = mippsFileName ?: getString(R.string.mipps_unknown_file)
+        if (lastStatus?.nvBackend == 0) {
+            binding.mippsStatus.text = getString(R.string.mipps_nv_unavailable)
+            updateEnabledState()
+            return
+        }
+        val summary = result.segments.joinToString("\n") { segment ->
+            "${segment.label}: ${segment.vdos.joinToString(" ") { it.toString(16).uppercase().padStart(8, '0') }}"
+        }
+        AlertDialog.Builder(this)
+            .setTitle(R.string.mipps_confirm_title)
+            .setMessage(getString(R.string.mipps_confirm_message, fileName, summary))
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(android.R.string.ok) { _, _ -> writeMippsSlot0(device, result) }
+            .show()
+    }
+
+    private fun writeMippsSlot0(device: UsbDevice, result: XiaomiCsvParser.Result) {
+        val currentDevice = supportedDevice()
+        if (
+            isBusy || !hasReadStatus || currentDevice == null || currentDevice.deviceName != device.deviceName ||
+            !usbManager.hasPermission(device) || !isSupportedAppDevice(device) || lastStatus?.nvBackend == 0
+        ) {
+            binding.mippsStatus.text = getString(R.string.protocol_waiting)
+            updateEnabledState()
+            return
+        }
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        binding.mippsProgress.progress = 0
+        binding.mippsProgress.isIndeterminate = false
+        binding.mippsProgress.visibility = View.VISIBLE
+        binding.mippsStatus.text = getString(R.string.mipps_writing, 0)
+        setBusy(true)
+        appendLog(getString(R.string.mipps_write_started))
+        ioExecutor.execute {
+            try {
+                activeSession(checkNotNull(currentDevice)).writeMippsSlot0(result.slot0) { progress ->
+                    runOnUiThread {
+                        binding.mippsProgress.progress = progress
+                        binding.mippsStatus.text = getString(R.string.mipps_writing, progress)
+                    }
+                }
+                runOnUiThread {
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                    binding.mippsProgress.progress = 100
+                    binding.mippsStatus.text = getString(R.string.mipps_write_complete)
+                    appendLog(getString(R.string.mipps_write_complete))
+                    setBusy(false)
+                }
+            } catch (error: Throwable) {
+                runOnUiThread {
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                    val message = error.message ?: error.javaClass.simpleName
+                    binding.mippsProgress.visibility = View.GONE
+                    binding.mippsStatus.text = getString(R.string.mipps_write_failed, message)
+                    appendLog(getString(R.string.mipps_write_failed, message))
+                    setBusy(false)
+                }
+            }
+        }
     }
 
     private fun queryDeviceStatus() {
@@ -1013,6 +1318,32 @@ class MainActivity : Activity() {
         binding.bootloaderButton.text = getString(if (bootloaderMode) R.string.exit_bootloader else R.string.enter_bootloader)
         binding.bootloaderButton.isEnabled = appReady || bootloaderReady
         binding.flashFirmwareButton.isEnabled = bootloaderReady && firmwareImage != null
+        binding.simpleFirmwareButton.isEnabled = !isBusy && device != null && when {
+            firmwareImage == null -> true
+            bootloaderMode -> bootloaderReady
+            appMode -> appReady
+            else -> false
+        }
+        binding.simpleFirmwareButton.setText(
+            when {
+                firmwareImage == null -> R.string.pull_latest_firmware
+                bootloaderMode -> R.string.flash_firmware
+                else -> R.string.enter_bootloader
+            },
+        )
+        binding.simpleFirmwareStatus.text = when {
+            isBusy -> binding.firmwareStatus.text
+            device == null -> getString(R.string.simple_firmware_connect_reason)
+            !hasPermission -> getString(R.string.simple_firmware_permission_reason)
+            firmwareImage == null -> getString(R.string.simple_firmware_prepare_reason)
+            bootloaderMode && !bootloaderReady -> getString(R.string.simple_firmware_bl_reason)
+            bootloaderMode -> getString(R.string.simple_firmware_flash_ready)
+            !hasReadStatus -> getString(R.string.simple_firmware_sync_reason)
+            else -> getString(R.string.simple_firmware_enter_bl_ready)
+        }
+        binding.selectMippsCsvButton.isEnabled = !isBusy
+        binding.writeMippsSlot0Button.isEnabled =
+            appReady && lastStatus?.nvBackend != 0 && mippsImport != null
 
         binding.prioritySpinner.isEnabled = appReady
         binding.pdModeSpinner.isEnabled = appReady
@@ -1165,6 +1496,7 @@ class MainActivity : Activity() {
 
     companion object {
         private const val ACTION_USB_PERMISSION = "com.pdtool.voltage.USB_PERMISSION"
+        private const val REQUEST_MIPPS_CSV = 2001
 
         private const val PD_VENDOR_ID = 0xA016
         private const val STD_APP_PRODUCT_ID = 0x0404

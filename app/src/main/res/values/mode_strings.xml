@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tab_home">首頁</string>
+  <string name="usage_mode">使用模式</string>
+  <string name="simple_mode">簡單模式</string>
+  <string name="professional_mode">專業模式</string>
+  <string name="simple_mode_hint">常用調壓與一鍵固件流程，適合日常使用。</string>
+  <string name="professional_mode_hint">顯示系統參數、MIPPS、完整固件工具與日誌。</string>
+  <string name="enter_professional_mode">專業模式</string>
+  <string name="enter_simple_mode">簡單模式</string>
+  <string name="switch_to_simple_mode">切換到簡單模式</string>
+    <string name="current_negotiation_warning">設定電壓提示：PPS 以 0.02V 為步進；AVS（SPR 或 EPR）以 0.1V 為步進。若設定不符合步進的數值，可能無法握手。</string>
+    <string name="led_explanation_title">LED 說明</string>
+    <string name="led_explanation_body">燈光常亮表示已誘騙到指定檔位；燈光呼吸表示誘騙失敗。誘騙失敗通常是因為沒有 PDO 信息：請檢查是否使用了 AC 線，或 PDO 信息中不包含所請求的檔位，並核對充電器銘牌是否包含該檔位。</string>
+  <string name="quick_preset_long_press_hint">點按填入電壓和電流；長按可編輯或收藏。</string>
+  <string name="edit_quick_preset">編輯常用電壓</string>
+  <string name="favorite_preset">收藏（優先顯示）</string>
+  <string name="restore_default">恢復默認</string>
+  <string name="save">保存</string>
+  <string name="simple_firmware_title">固件更新</string>
+  <string name="simple_firmware_connect_reason">連接 PD HID 設備後可檢查固件。</string>
+  <string name="simple_firmware_permission_reason">請先授權當前 USB 設備。</string>
+  <string name="simple_firmware_prepare_reason">固件尚未準備；點擊後會優先使用本機緩存。</string>
+  <string name="simple_firmware_bl_reason">Bootloader 已連接，請完成 USB 重新授權。</string>
+  <string name="simple_firmware_flash_ready">Bootloader 與固件均已就緒，可以刷寫。</string>
+  <string name="simple_firmware_sync_reason">請先同步設備狀態。</string>
+  <string name="simple_firmware_enter_bl_ready">固件已準備；下一步進入 BL 模式並重新授權。</string>
+</resources>

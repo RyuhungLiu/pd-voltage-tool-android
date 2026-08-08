@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mipps_title">小米 MIPPS 匯入</string>
+    <string name="mipps_hint">匯入小米 PD 擷取 CSV，提取 XM_01/04/05/08 並覆蓋寫入 MIPPS Slot 0。僅 APP 模式且設備 NV 儲存可用時可寫入。</string>
+    <string name="mipps_status_empty">尚未選擇 CSV。</string>
+    <string name="mipps_select_csv">選擇小米 CSV</string>
+    <string name="mipps_write_slot0">寫入 MIPPS Slot 0</string>
+    <string name="mipps_unknown_file">未命名 CSV</string>
+    <string name="mipps_parsing">正在解析 %1$s…</string>
+    <string name="mipps_parsed">%1$s\nSlot 0：%2$d bytes · CRC16：%3$04X\n需要補發 010A：%4$s\n\n%5$s</string>
+    <string name="mipps_yes">是</string><string name="mipps_no">否</string>
+    <string name="mipps_parsed_log">已解析小米 CSV：%1$s</string>
+    <string name="mipps_parse_failed">CSV 解析失敗：%1$s</string>
+    <string name="mipps_nv_unavailable">設備沒有可用的 NV 儲存，無法寫入 MIPPS Slot。</string>
+    <string name="mipps_confirm_title">覆蓋 MIPPS Slot 0？</string>
+    <string name="mipps_confirm_message">檔案：%1$s\n\n%2$s\n\n這會覆蓋 Slot 0。請保持 APP 模式，操作期間不要拔出 OTG。</string>
+    <string name="mipps_writing">正在寫入 MIPPS Slot 0：%1$d%%</string>
+    <string name="mipps_write_started">開始寫入 MIPPS Slot 0</string>
+    <string name="mipps_write_complete">MIPPS Slot 0 寫入並套用成功。</string>
+    <string name="mipps_write_failed">MIPPS 寫入失敗：%1$s</string>
+</resources>

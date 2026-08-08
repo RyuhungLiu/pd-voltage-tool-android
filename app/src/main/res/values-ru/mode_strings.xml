@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tab_home">Главная</string>
+  <string name="usage_mode">Режим работы</string>
+  <string name="simple_mode">Простой режим</string>
+  <string name="professional_mode">Профессиональный режим</string>
+  <string name="simple_mode_hint">Частые напряжения и пошаговое обновление прошивки.</string>
+  <string name="professional_mode_hint">Параметры системы, MIPPS, все инструменты прошивки и журнал.</string>
+  <string name="enter_professional_mode">Профессиональный</string>
+  <string name="enter_simple_mode">Простой</string>
+  <string name="switch_to_simple_mode">Перейти в простой режим</string>
+  <string name="current_negotiation_warning">Напряжение: шаг PPS — 0,02 В, AVS (SPR или EPR) — 0,1 В. Значение вне шага может привести к сбою согласования.</string>
+  <string name="led_explanation_title">Индикация LED</string><string name="led_explanation_body">Постоянный свет означает успешное согласование профиля, пульсирующий — сбой. Обычно отсутствуют данные PDO. Проверьте AC-кабель, наличие запрошенного профиля в PDO и его указание на шильдике зарядного устройства.</string>
+  <string name="quick_preset_long_press_hint">Нажмите для ввода; удерживайте для изменения или избранного.</string>
+  <string name="edit_quick_preset">Изменить частое напряжение</string>
+  <string name="favorite_preset">Избранное (показывать первым)</string>
+  <string name="restore_default">Восстановить</string>
+  <string name="save">Сохранить</string>
+  <string name="simple_firmware_title">Обновление прошивки</string>
+  <string name="simple_firmware_connect_reason">Подключите устройство PD HID для проверки прошивки.</string><string name="simple_firmware_permission_reason">Сначала разрешите доступ к текущему USB-устройству.</string><string name="simple_firmware_prepare_reason">Прошивка не готова; сначала используется локальный кэш.</string><string name="simple_firmware_bl_reason">Bootloader подключён; снова разрешите доступ USB.</string><string name="simple_firmware_flash_ready">Bootloader и прошивка готовы к записи.</string><string name="simple_firmware_sync_reason">Сначала синхронизируйте состояние устройства.</string><string name="simple_firmware_enter_bl_ready">Прошивка готова; войдите в BL и снова разрешите доступ.</string>
+</resources>

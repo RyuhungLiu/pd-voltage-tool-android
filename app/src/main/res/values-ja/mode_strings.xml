@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tab_home">ホーム</string>
+  <string name="usage_mode">使用モード</string>
+  <string name="simple_mode">シンプルモード</string>
+  <string name="professional_mode">プロモード</string>
+  <string name="simple_mode_hint">日常向けの電圧調整とガイド付きファームウェア更新。</string>
+  <string name="professional_mode_hint">システム設定、MIPPS、全ファームウェア機能とログを表示。</string>
+  <string name="enter_professional_mode">プロモード</string>
+  <string name="enter_simple_mode">シンプル</string>
+  <string name="switch_to_simple_mode">シンプルモードへ</string>
+  <string name="current_negotiation_warning">電圧設定：PPS は 0.02V、AVS（SPR または EPR）は 0.1V 刻みです。刻みに合わない値ではネゴシエーションできない場合があります。</string>
+  <string name="led_explanation_title">LED の説明</string><string name="led_explanation_body">点灯は指定プロファイルへのネゴシエーション成功、呼吸点灯は失敗を示します。失敗は通常 PDO 情報がないためです。AC ケーブルの使用、PDO に要求プロファイルがあるか、充電器の銘板に記載があるかを確認してください。</string>
+  <string name="quick_preset_long_press_hint">タップで入力、長押しで編集・お気に入り。</string>
+  <string name="edit_quick_preset">常用電圧を編集</string>
+  <string name="favorite_preset">お気に入り（先頭表示）</string>
+  <string name="restore_default">既定値に戻す</string>
+  <string name="save">保存</string>
+  <string name="simple_firmware_title">ファームウェア更新</string>
+  <string name="simple_firmware_connect_reason">PD HID機器を接続するとファームウェアを確認できます。</string><string name="simple_firmware_permission_reason">現在のUSB機器へのアクセスを許可してください。</string><string name="simple_firmware_prepare_reason">未準備です。まず端末内キャッシュを使用します。</string><string name="simple_firmware_bl_reason">Bootloader接続済み。USBを再許可してください。</string><string name="simple_firmware_flash_ready">Bootloaderとファームウェアの準備が完了しました。</string><string name="simple_firmware_sync_reason">先に機器状態を同期してください。</string><string name="simple_firmware_enter_bl_ready">準備完了。BLモードに入り再許可してください。</string>
+</resources>

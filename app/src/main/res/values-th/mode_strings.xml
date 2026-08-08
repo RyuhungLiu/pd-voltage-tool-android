@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tab_home">หน้าหลัก</string>
+  <string name="usage_mode">โหมดใช้งาน</string>
+  <string name="simple_mode">โหมดง่าย</string>
+  <string name="professional_mode">โหมดมืออาชีพ</string>
+  <string name="simple_mode_hint">แรงดันที่ใช้บ่อยและขั้นตอนอัปเดตเฟิร์มแวร์แบบแนะนำ</string>
+  <string name="professional_mode_hint">แสดงพารามิเตอร์ระบบ MIPPS เครื่องมือเฟิร์มแวร์ทั้งหมด และบันทึก</string>
+  <string name="enter_professional_mode">มืออาชีพ</string>
+  <string name="enter_simple_mode">ง่าย</string>
+  <string name="switch_to_simple_mode">เปลี่ยนเป็นโหมดง่าย</string>
+  <string name="current_negotiation_warning">การตั้งแรงดัน: PPS ใช้ขั้น 0.02V และ AVS (SPR หรือ EPR) ใช้ขั้น 0.1V ค่าที่ไม่ตรงขั้นอาจเจรจาไม่สำเร็จ</string>
+  <string name="led_explanation_title">คำอธิบาย LED</string><string name="led_explanation_body">ไฟติดค้างหมายถึงเจรจาโปรไฟล์ที่ขอสำเร็จ ไฟหายใจหมายถึงล้มเหลว ซึ่งมักเกิดจากไม่มีข้อมูล PDO โปรดตรวจสาย AC โปรไฟล์ที่ขอใน PDO และข้อมูลบนฉลากเครื่องชาร์จ</string>
+  <string name="quick_preset_long_press_hint">แตะเพื่อกรอก กดค้างเพื่อแก้ไขหรือเพิ่มรายการโปรด</string>
+  <string name="edit_quick_preset">แก้ไขแรงดันที่ใช้บ่อย</string>
+  <string name="favorite_preset">รายการโปรด (แสดงก่อน)</string>
+  <string name="restore_default">คืนค่าเริ่มต้น</string>
+  <string name="save">บันทึก</string>
+  <string name="simple_firmware_title">อัปเดตเฟิร์มแวร์</string>
+  <string name="simple_firmware_connect_reason">เชื่อมต่ออุปกรณ์ PD HID เพื่อตรวจสอบเฟิร์มแวร์</string><string name="simple_firmware_permission_reason">อนุญาตการเข้าถึงอุปกรณ์ USB ปัจจุบันก่อน</string><string name="simple_firmware_prepare_reason">เฟิร์มแวร์ยังไม่พร้อม โดยจะใช้แคชในเครื่องก่อน</string><string name="simple_firmware_bl_reason">เชื่อมต่อ Bootloader แล้ว โปรดอนุญาต USB อีกครั้ง</string><string name="simple_firmware_flash_ready">Bootloader และเฟิร์มแวร์พร้อมเขียนแล้ว</string><string name="simple_firmware_sync_reason">ซิงค์สถานะอุปกรณ์ก่อน</string><string name="simple_firmware_enter_bl_ready">เฟิร์มแวร์พร้อมแล้ว เข้าโหมด BL และอนุญาตอีกครั้ง</string>
+</resources>

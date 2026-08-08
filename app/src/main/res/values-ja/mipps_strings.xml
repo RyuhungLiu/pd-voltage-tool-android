@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mipps_title">Xiaomi MIPPS インポート</string>
+    <string name="mipps_hint">Xiaomi PD キャプチャ CSV から XM_01/04/05/08 を抽出し、MIPPS Slot 0 を上書きします。APP モードと使用可能な NV ストレージが必要です。</string>
+    <string name="mipps_status_empty">CSV が選択されていません。</string><string name="mipps_select_csv">Xiaomi CSV を選択</string><string name="mipps_write_slot0">MIPPS Slot 0 に書き込む</string>
+    <string name="mipps_unknown_file">名称未設定 CSV</string><string name="mipps_parsing">%1$s を解析中…</string>
+    <string name="mipps_parsed">%1$s\nSlot 0: %2$d bytes · CRC16: %3$04X\n010A 再送: %4$s\n\n%5$s</string><string name="mipps_yes">はい</string><string name="mipps_no">いいえ</string>
+    <string name="mipps_parsed_log">Xiaomi CSV を解析しました: %1$s</string><string name="mipps_parse_failed">CSV 解析失敗: %1$s</string>
+    <string name="mipps_nv_unavailable">MIPPS Slot に使用できる NV ストレージがありません。</string><string name="mipps_confirm_title">MIPPS Slot 0 を上書きしますか？</string>
+    <string name="mipps_confirm_message">ファイル: %1$s\n\n%2$s\n\nSlot 0 を上書きします。APP モードを維持し、OTG を取り外さないでください。</string>
+    <string name="mipps_writing">MIPPS Slot 0 書き込み中: %1$d%%</string><string name="mipps_write_started">MIPPS Slot 0 の書き込みを開始</string>
+    <string name="mipps_write_complete">MIPPS Slot 0 の書き込みと適用が完了しました。</string><string name="mipps_write_failed">MIPPS 書き込み失敗: %1$s</string>
+</resources>

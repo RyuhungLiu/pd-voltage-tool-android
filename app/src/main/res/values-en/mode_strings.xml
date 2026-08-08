@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tab_home">Home</string>
+  <string name="usage_mode">Usage mode</string>
+  <string name="simple_mode">Simple mode</string>
+  <string name="professional_mode">Professional mode</string>
+  <string name="simple_mode_hint">Common voltage controls and a guided firmware flow for everyday use.</string>
+  <string name="professional_mode_hint">Shows system parameters, MIPPS, full firmware tools, and logs.</string>
+  <string name="enter_professional_mode">Professional</string>
+  <string name="enter_simple_mode">Simple</string>
+  <string name="switch_to_simple_mode">Switch to Simple mode</string>
+    <string name="current_negotiation_warning">Voltage setting: PPS uses 0.02V steps; AVS (SPR or EPR) uses 0.1V steps. A value outside the required step may fail to negotiate.</string>
+    <string name="led_explanation_title">LED guide</string>
+    <string name="led_explanation_body">A steady light means the requested profile was negotiated. A breathing light means negotiation failed, usually because no PDO information was received. Check whether an AC cable is being used, whether the requested profile exists in the PDO data, and whether it is listed on the charger label.</string>
+  <string name="quick_preset_long_press_hint">Tap to fill voltage and current; touch and hold to edit or favorite.</string>
+  <string name="edit_quick_preset">Edit common voltage</string>
+  <string name="favorite_preset">Favorite (show first)</string>
+  <string name="restore_default">Restore default</string>
+  <string name="save">Save</string>
+  <string name="simple_firmware_title">Firmware update</string>
+  <string name="simple_firmware_connect_reason">Connect a PD HID device to check firmware.</string>
+  <string name="simple_firmware_permission_reason">Grant access to the current USB device first.</string>
+  <string name="simple_firmware_prepare_reason">Firmware is not ready; local cache will be used first.</string>
+  <string name="simple_firmware_bl_reason">Bootloader connected; grant USB access again.</string>
+  <string name="simple_firmware_flash_ready">Bootloader and firmware are ready to flash.</string>
+  <string name="simple_firmware_sync_reason">Sync the device status first.</string>
+  <string name="simple_firmware_enter_bl_ready">Firmware is ready; enter BL mode and authorize it again.</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tab_home">होम</string>
+  <string name="usage_mode">उपयोग मोड</string>
+  <string name="simple_mode">सरल मोड</string>
+  <string name="professional_mode">पेशेवर मोड</string>
+  <string name="simple_mode_hint">सामान्य वोल्टेज और निर्देशित फ़र्मवेयर अपडेट।</string>
+  <string name="professional_mode_hint">सिस्टम पैरामीटर, MIPPS, सभी फ़र्मवेयर टूल और लॉग दिखाता है।</string>
+  <string name="enter_professional_mode">पेशेवर</string>
+  <string name="enter_simple_mode">सरल</string>
+  <string name="switch_to_simple_mode">सरल मोड पर जाएँ</string>
+  <string name="current_negotiation_warning">वोल्टेज सेटिंग: PPS का चरण 0.02V और AVS (SPR या EPR) का 0.1V है। गलत चरण का मान नेगोशिएट नहीं हो सकता।</string>
+  <string name="led_explanation_title">LED संकेत</string><string name="led_explanation_body">स्थिर रोशनी का अर्थ अनुरोधित प्रोफ़ाइल सफल है; सांस जैसी रोशनी विफलता दिखाती है। आम तौर पर PDO जानकारी नहीं मिली। AC केबल, PDO में अनुरोधित प्रोफ़ाइल और चार्जर लेबल की जानकारी जाँचें।</string>
+  <string name="quick_preset_long_press_hint">मान भरने के लिए टैप करें; संपादित या पसंदीदा बनाने के लिए दबाए रखें।</string>
+  <string name="edit_quick_preset">सामान्य वोल्टेज संपादित करें</string>
+  <string name="favorite_preset">पसंदीदा (पहले दिखाएँ)</string>
+  <string name="restore_default">डिफ़ॉल्ट बहाल करें</string>
+  <string name="save">सहेजें</string>
+  <string name="simple_firmware_title">फ़र्मवेयर अपडेट</string>
+  <string name="simple_firmware_connect_reason">फ़र्मवेयर जाँचने के लिए PD HID उपकरण जोड़ें।</string><string name="simple_firmware_permission_reason">पहले वर्तमान USB उपकरण को अनुमति दें।</string><string name="simple_firmware_prepare_reason">फ़र्मवेयर तैयार नहीं है; पहले स्थानीय कैश उपयोग होगा।</string><string name="simple_firmware_bl_reason">Bootloader जुड़ा है; USB को फिर अनुमति दें।</string><string name="simple_firmware_flash_ready">Bootloader और फ़र्मवेयर लिखने के लिए तैयार हैं।</string><string name="simple_firmware_sync_reason">पहले उपकरण की स्थिति सिंक करें।</string><string name="simple_firmware_enter_bl_ready">फ़र्मवेयर तैयार है; BL मोड में जाकर फिर अनुमति दें।</string>
+</resources>

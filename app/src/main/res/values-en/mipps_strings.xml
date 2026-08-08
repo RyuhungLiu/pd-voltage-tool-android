@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mipps_title">Xiaomi MIPPS import</string>
+    <string name="mipps_hint">Import a Xiaomi PD capture CSV, extract XM_01/04/05/08, and overwrite MIPPS Slot 0. Writing requires APP mode and available device NV storage.</string>
+    <string name="mipps_status_empty">No CSV selected.</string>
+    <string name="mipps_select_csv">Select Xiaomi CSV</string>
+    <string name="mipps_write_slot0">Write MIPPS Slot 0</string>
+    <string name="mipps_unknown_file">Unnamed CSV</string>
+    <string name="mipps_parsing">Parsing %1$s…</string>
+    <string name="mipps_parsed">%1$s\nSlot 0: %2$d B · CRC16: %3$04X\nResend 010A: %4$s\n\n%5$s</string>
+    <string name="mipps_yes">Yes</string>
+    <string name="mipps_no">No</string>
+    <string name="mipps_parsed_log">Parsed Xiaomi CSV: %1$s</string>
+    <string name="mipps_parse_failed">CSV parsing failed: %1$s</string>
+    <string name="mipps_nv_unavailable">The device has no available NV storage for a MIPPS slot.</string>
+    <string name="mipps_confirm_title">Overwrite MIPPS Slot 0?</string>
+    <string name="mipps_confirm_message">File: %1$s\n\n%2$s\n\nThis will overwrite Slot 0. Keep the device in APP mode and do not disconnect OTG.</string>
+    <string name="mipps_writing">Writing MIPPS Slot 0: %1$d%%</string>
+    <string name="mipps_write_started">Started writing MIPPS Slot 0</string>
+    <string name="mipps_write_complete">MIPPS Slot 0 was written and applied successfully.</string>
+    <string name="mipps_write_failed">MIPPS write failed: %1$s</string>
+</resources>

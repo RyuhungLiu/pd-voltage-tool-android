@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tab_home">Start</string>
+  <string name="usage_mode">Gebruiksmodus</string>
+  <string name="simple_mode">Eenvoudige modus</string>
+  <string name="professional_mode">Professionele modus</string>
+  <string name="simple_mode_hint">Veelgebruikte spanningen en begeleide firmware-update.</string>
+  <string name="professional_mode_hint">Toont systeeminstellingen, MIPPS, alle firmwaretools en logboeken.</string>
+  <string name="enter_professional_mode">Professioneel</string>
+  <string name="enter_simple_mode">Eenvoudig</string>
+  <string name="switch_to_simple_mode">Naar eenvoudige modus</string>
+  <string name="current_negotiation_warning">Spanning: PPS gebruikt stappen van 0,02 V en AVS (SPR of EPR) van 0,1 V. Een onjuiste stap kan onderhandeling verhinderen.</string>
+  <string name="led_explanation_title">LED-uitleg</string><string name="led_explanation_body">Continu licht betekent dat het gevraagde profiel is onderhandeld; ademend licht betekent een mislukking. Meestal ontbreken PDO-gegevens. Controleer de AC-kabel, het gevraagde profiel in de PDO’s en de vermelding op het laderlabel.</string>
+  <string name="quick_preset_long_press_hint">Tik om in te vullen; houd vast om te bewerken of favoriet te maken.</string>
+  <string name="edit_quick_preset">Veelgebruikte spanning bewerken</string>
+  <string name="favorite_preset">Favoriet (eerst tonen)</string>
+  <string name="restore_default">Standaard herstellen</string>
+  <string name="save">Opslaan</string>
+  <string name="simple_firmware_title">Firmware-update</string>
+  <string name="simple_firmware_connect_reason">Sluit een PD HID-apparaat aan om firmware te controleren.</string><string name="simple_firmware_permission_reason">Geef eerst toegang tot het huidige USB-apparaat.</string><string name="simple_firmware_prepare_reason">Firmware niet gereed; lokale cache wordt eerst gebruikt.</string><string name="simple_firmware_bl_reason">Bootloader verbonden; geef opnieuw USB-toegang.</string><string name="simple_firmware_flash_ready">Bootloader en firmware zijn klaar om te flashen.</string><string name="simple_firmware_sync_reason">Synchroniseer eerst de apparaatstatus.</string><string name="simple_firmware_enter_bl_ready">Firmware gereed; start BL-modus en autoriseer opnieuw.</string>
+</resources>

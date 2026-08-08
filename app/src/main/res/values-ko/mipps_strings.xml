@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mipps_title">Xiaomi MIPPS 가져오기</string><string name="mipps_hint">Xiaomi PD 캡처 CSV에서 XM_01/04/05/08을 추출하여 MIPPS Slot 0을 덮어씁니다. APP 모드와 사용 가능한 NV 저장소가 필요합니다.</string>
+    <string name="mipps_status_empty">선택한 CSV가 없습니다.</string><string name="mipps_select_csv">Xiaomi CSV 선택</string><string name="mipps_write_slot0">MIPPS Slot 0 쓰기</string>
+    <string name="mipps_unknown_file">이름 없는 CSV</string><string name="mipps_parsing">%1$s 분석 중…</string><string name="mipps_parsed">%1$s\nSlot 0: %2$d bytes · CRC16: %3$04X\n010A 재전송: %4$s\n\n%5$s</string>
+    <string name="mipps_yes">예</string><string name="mipps_no">아니요</string><string name="mipps_parsed_log">Xiaomi CSV 분석 완료: %1$s</string><string name="mipps_parse_failed">CSV 분석 실패: %1$s</string>
+    <string name="mipps_nv_unavailable">MIPPS Slot에 사용할 NV 저장소가 없습니다.</string><string name="mipps_confirm_title">MIPPS Slot 0을 덮어쓸까요?</string>
+    <string name="mipps_confirm_message">파일: %1$s\n\n%2$s\n\nSlot 0을 덮어씁니다. APP 모드를 유지하고 OTG를 분리하지 마세요.</string>
+    <string name="mipps_writing">MIPPS Slot 0 쓰는 중: %1$d%%</string><string name="mipps_write_started">MIPPS Slot 0 쓰기 시작</string><string name="mipps_write_complete">MIPPS Slot 0 쓰기 및 적용 완료.</string><string name="mipps_write_failed">MIPPS 쓰기 실패: %1$s</string>
+</resources>

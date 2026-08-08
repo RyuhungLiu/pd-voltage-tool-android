@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tab_home">首頁</string>
+  <string name="usage_mode">使用模式</string>
+  <string name="simple_mode">簡單模式</string>
+  <string name="professional_mode">專業模式</string>
+  <string name="simple_mode_hint">常用調壓與一鍵韌體流程，適合日常使用。</string>
+  <string name="professional_mode_hint">顯示系統參數、MIPPS、完整韌體工具與日誌。</string>
+  <string name="enter_professional_mode">專業模式</string>
+  <string name="enter_simple_mode">簡單模式</string>
+  <string name="switch_to_simple_mode">切換到簡單模式</string>
+  <string name="current_negotiation_warning">設定電壓提示：PPS 以 0.02V 為步進；AVS（SPR 或 EPR）以 0.1V 為步進。若設定不符合步進的數值，可能無法交握。</string>
+  <string name="led_explanation_title">LED 說明</string><string name="led_explanation_body">燈光常亮表示已誘騙到指定檔位；燈光呼吸表示誘騙失敗。誘騙失敗通常是因為沒有 PDO 資訊：請檢查是否使用了 AC 線，或 PDO 資訊中不包含所請求的檔位，並核對充電器銘牌是否包含該檔位。</string>
+  <string name="quick_preset_long_press_hint">點按填入電壓和電流；長按可編輯或收藏。</string>
+  <string name="edit_quick_preset">編輯常用電壓</string>
+  <string name="favorite_preset">收藏（優先顯示）</string>
+  <string name="restore_default">恢復預設</string>
+  <string name="save">儲存</string>
+  <string name="simple_firmware_title">韌體更新</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tab_home">Accueil</string>
+  <string name="usage_mode">Mode d’utilisation</string>
+  <string name="simple_mode">Mode simple</string>
+  <string name="professional_mode">Mode expert</string>
+  <string name="simple_mode_hint">Réglages courants et mise à jour guidée du firmware.</string>
+  <string name="professional_mode_hint">Affiche les paramètres système, MIPPS, tous les outils et journaux.</string>
+  <string name="enter_professional_mode">Expert</string>
+  <string name="enter_simple_mode">Simple</string>
+  <string name="switch_to_simple_mode">Passer en mode simple</string>
+  <string name="current_negotiation_warning">Tension : PPS utilise un pas de 0,02 V et AVS (SPR ou EPR) un pas de 0,1 V. Une valeur hors pas peut empêcher la négociation.</string>
+  <string name="led_explanation_title">Signification de la LED</string><string name="led_explanation_body">Une lumière fixe indique que le profil demandé a été négocié ; une lumière pulsée indique un échec. Celui-ci vient généralement de l’absence de données PDO. Vérifiez le câble AC, la présence du profil demandé dans les PDO et son indication sur l’étiquette du chargeur.</string>
+  <string name="quick_preset_long_press_hint">Touchez pour remplir ; maintenez pour modifier ou ajouter aux favoris.</string>
+  <string name="edit_quick_preset">Modifier la tension courante</string>
+  <string name="favorite_preset">Favori (afficher d’abord)</string>
+  <string name="restore_default">Valeur par défaut</string>
+  <string name="save">Enregistrer</string>
+  <string name="simple_firmware_title">Mise à jour du firmware</string>
+  <string name="simple_firmware_connect_reason">Connectez un appareil PD HID pour vérifier le firmware.</string><string name="simple_firmware_permission_reason">Autorisez d’abord l’accès à l’appareil USB actuel.</string><string name="simple_firmware_prepare_reason">Firmware non prêt ; le cache local sera utilisé en priorité.</string><string name="simple_firmware_bl_reason">Bootloader connecté ; autorisez de nouveau l’accès USB.</string><string name="simple_firmware_flash_ready">Bootloader et firmware prêts pour l’écriture.</string><string name="simple_firmware_sync_reason">Synchronisez d’abord l’état de l’appareil.</string><string name="simple_firmware_enter_bl_ready">Firmware prêt ; passez en mode BL et autorisez-le à nouveau.</string>
+</resources>

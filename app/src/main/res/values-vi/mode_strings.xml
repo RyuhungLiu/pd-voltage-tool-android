@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tab_home">Trang chủ</string>
+  <string name="usage_mode">Chế độ sử dụng</string>
+  <string name="simple_mode">Chế độ đơn giản</string>
+  <string name="professional_mode">Chế độ chuyên nghiệp</string>
+  <string name="simple_mode_hint">Điện áp thường dùng và quy trình cập nhật firmware có hướng dẫn.</string>
+  <string name="professional_mode_hint">Hiện tham số hệ thống, MIPPS, đầy đủ công cụ firmware và nhật ký.</string>
+  <string name="enter_professional_mode">Chuyên nghiệp</string>
+  <string name="enter_simple_mode">Đơn giản</string>
+  <string name="switch_to_simple_mode">Chuyển sang chế độ đơn giản</string>
+  <string name="current_negotiation_warning">Đặt điện áp: PPS theo bước 0,02V; AVS (SPR hoặc EPR) theo bước 0,1V. Giá trị sai bước có thể không thương lượng được.</string>
+  <string name="led_explanation_title">Giải thích LED</string><string name="led_explanation_body">Đèn sáng liên tục nghĩa là đã thương lượng đúng cấu hình; đèn thở nghĩa là thất bại. Nguyên nhân thường là không có dữ liệu PDO. Hãy kiểm tra cáp AC, cấu hình yêu cầu trong PDO và thông tin trên nhãn bộ sạc.</string>
+  <string name="quick_preset_long_press_hint">Chạm để điền; nhấn giữ để sửa hoặc yêu thích.</string>
+  <string name="edit_quick_preset">Sửa điện áp thường dùng</string>
+  <string name="favorite_preset">Yêu thích (hiện trước)</string>
+  <string name="restore_default">Khôi phục mặc định</string>
+  <string name="save">Lưu</string>
+  <string name="simple_firmware_title">Cập nhật firmware</string>
+  <string name="simple_firmware_connect_reason">Kết nối thiết bị PD HID để kiểm tra firmware.</string><string name="simple_firmware_permission_reason">Hãy cấp quyền cho thiết bị USB hiện tại trước.</string><string name="simple_firmware_prepare_reason">Firmware chưa sẵn sàng; ưu tiên dùng bộ nhớ đệm cục bộ.</string><string name="simple_firmware_bl_reason">Đã kết nối Bootloader; hãy cấp lại quyền USB.</string><string name="simple_firmware_flash_ready">Bootloader và firmware đã sẵn sàng để ghi.</string><string name="simple_firmware_sync_reason">Hãy đồng bộ trạng thái thiết bị trước.</string><string name="simple_firmware_enter_bl_ready">Firmware đã sẵn sàng; vào chế độ BL và cấp lại quyền.</string>
+</resources>

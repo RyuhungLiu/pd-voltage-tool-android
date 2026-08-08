@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tab_home">Beranda</string>
+  <string name="usage_mode">Mode penggunaan</string>
+  <string name="simple_mode">Mode sederhana</string>
+  <string name="professional_mode">Mode profesional</string>
+  <string name="simple_mode_hint">Tegangan umum dan pembaruan firmware terpandu.</string>
+  <string name="professional_mode_hint">Menampilkan parameter sistem, MIPPS, seluruh alat firmware, dan log.</string>
+  <string name="enter_professional_mode">Profesional</string>
+  <string name="enter_simple_mode">Sederhana</string>
+  <string name="switch_to_simple_mode">Beralih ke mode sederhana</string>
+  <string name="current_negotiation_warning">Pengaturan tegangan: PPS memakai langkah 0,02V; AVS (SPR atau EPR) 0,1V. Nilai yang tidak sesuai langkah dapat gagal bernegosiasi.</string>
+  <string name="led_explanation_title">Keterangan LED</string><string name="led_explanation_body">Lampu menyala tetap berarti profil yang diminta berhasil dinegosiasikan; lampu bernapas berarti gagal. Biasanya data PDO tidak tersedia. Periksa kabel AC, profil yang diminta dalam PDO, dan informasi pada label pengisi daya.</string>
+  <string name="quick_preset_long_press_hint">Ketuk untuk mengisi; tekan lama untuk mengedit atau memfavoritkan.</string>
+  <string name="edit_quick_preset">Edit tegangan umum</string>
+  <string name="favorite_preset">Favorit (tampilkan dulu)</string>
+  <string name="restore_default">Pulihkan bawaan</string>
+  <string name="save">Simpan</string>
+  <string name="simple_firmware_title">Pembaruan firmware</string>
+  <string name="simple_firmware_connect_reason">Hubungkan perangkat PD HID untuk memeriksa firmware.</string><string name="simple_firmware_permission_reason">Izinkan akses ke perangkat USB saat ini terlebih dahulu.</string><string name="simple_firmware_prepare_reason">Firmware belum siap; cache lokal akan digunakan lebih dulu.</string><string name="simple_firmware_bl_reason">Bootloader terhubung; izinkan ulang akses USB.</string><string name="simple_firmware_flash_ready">Bootloader dan firmware siap ditulis.</string><string name="simple_firmware_sync_reason">Sinkronkan status perangkat terlebih dahulu.</string><string name="simple_firmware_enter_bl_ready">Firmware siap; masuk mode BL dan izinkan ulang.</string>
+</resources>

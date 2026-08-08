@@ -57,6 +57,41 @@ class UsbHidSession private constructor(
         send(PdUsbProtocol.command(PdUsbProtocol.CMD_ENTER_BOOTLOADER), timeoutMs)
     }
 
+    fun writeMippsSlot0(
+        slotData: ByteArray,
+        timeoutMs: Long = 2_000,
+        onProgress: (Int) -> Unit = {},
+    ) {
+        require(slotData.size == MippsProtocol.SLOT_SIZE) {
+            "MIPPS Slot 0 must be exactly ${MippsProtocol.SLOT_SIZE} bytes"
+        }
+
+        mippsTransaction(MippsProtocol.OP_START, MippsProtocol.startCommand(), timeoutMs)
+            .also { MippsProtocol.requireSuccess(it, "MIPPS start") }
+        onProgress(0)
+
+        var offset = 0
+        while (offset < slotData.size) {
+            val end = minOf(offset + MippsProtocol.DATA_CHUNK_SIZE, slotData.size)
+            val chunk = slotData.copyOfRange(offset, end)
+            mippsTransaction(
+                MippsProtocol.OP_DATA,
+                MippsProtocol.dataCommand(offset, chunk),
+                timeoutMs,
+            ).also { MippsProtocol.requireSuccess(it, "MIPPS data at offset $offset") }
+            offset = end
+            onProgress(offset * 90 / slotData.size)
+        }
+
+        val crc16 = MippsProtocol.crc16CcittFalse(slotData)
+        mippsTransaction(MippsProtocol.OP_FINISH, MippsProtocol.finishCommand(crc16), timeoutMs)
+            .also { MippsProtocol.requireSuccess(it, "MIPPS finish") }
+        onProgress(95)
+        mippsTransaction(MippsProtocol.OP_APPLY, MippsProtocol.applyCommand(), timeoutMs)
+            .also { MippsProtocol.requireSuccess(it, "MIPPS apply") }
+        onProgress(100)
+    }
+
     fun queryBootloaderInfo(timeoutMs: Long = 2_000): FirmwareProtocol.BootloaderInfo {
         val response = bootloaderTransaction(FirmwareProtocol.CMD_BOOTLOADER_INFO, timeoutMs = timeoutMs)
         return FirmwareProtocol.parseBootloaderInfo(response)
@@ -120,6 +155,19 @@ class UsbHidSession private constructor(
     ): FirmwareProtocol.Response {
         send(FirmwareProtocol.command(command, payload), timeoutMs)
         return FirmwareProtocol.parseResponse(receive(timeoutMs), command)
+    }
+
+    private fun mippsTransaction(
+        operation: Int,
+        report: ByteArray,
+        timeoutMs: Long,
+    ): MippsProtocol.Response {
+        send(report, timeoutMs)
+        return waitFor(timeoutMs) { response ->
+            MippsProtocol.parseResponse(response, operation)
+        } ?: throw TimeoutException(
+            "MIPPS response timeout for operation 0x${operation.toString(16).uppercase()}",
+        )
     }
 
     private fun sendAndWaitForAck(command: Int, payload: ByteArray, timeoutMs: Long) {
@@ -217,4 +265,3 @@ class UsbHidSession private constructor(
         }
     }
 }
-

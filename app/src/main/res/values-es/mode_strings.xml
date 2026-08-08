@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="tab_home">Inicio</string>
+  <string name="usage_mode">Modo de uso</string>
+  <string name="simple_mode">Modo simple</string>
+  <string name="professional_mode">Modo profesional</string>
+  <string name="simple_mode_hint">Voltajes habituales y actualización guiada del firmware.</string>
+  <string name="professional_mode_hint">Muestra parámetros, MIPPS, todas las herramientas y registros.</string>
+  <string name="enter_professional_mode">Profesional</string>
+  <string name="enter_simple_mode">Simple</string>
+  <string name="switch_to_simple_mode">Cambiar al modo simple</string>
+  <string name="current_negotiation_warning">Voltaje: PPS usa pasos de 0,02 V y AVS (SPR o EPR) de 0,1 V. Un valor fuera del paso puede impedir la negociación.</string>
+  <string name="led_explanation_title">Indicador LED</string><string name="led_explanation_body">La luz fija indica que se negoció el perfil solicitado; la luz pulsante indica un fallo. Suele deberse a que no hay datos PDO. Comprueba el cable AC, que el perfil solicitado esté en los PDO y que aparezca en la etiqueta del cargador.</string>
+  <string name="quick_preset_long_press_hint">Toca para rellenar; mantén pulsado para editar o marcar favorito.</string>
+  <string name="edit_quick_preset">Editar voltaje habitual</string>
+  <string name="favorite_preset">Favorito (mostrar primero)</string>
+  <string name="restore_default">Restaurar predeterminado</string>
+  <string name="save">Guardar</string>
+  <string name="simple_firmware_title">Actualización de firmware</string>
+  <string name="simple_firmware_connect_reason">Conecta un dispositivo PD HID para comprobar el firmware.</string><string name="simple_firmware_permission_reason">Autoriza primero el dispositivo USB actual.</string><string name="simple_firmware_prepare_reason">Firmware no preparado; se usará primero la caché local.</string><string name="simple_firmware_bl_reason">Bootloader conectado; vuelve a autorizar el USB.</string><string name="simple_firmware_flash_ready">Bootloader y firmware listos para escribir.</string><string name="simple_firmware_sync_reason">Sincroniza primero el estado del dispositivo.</string><string name="simple_firmware_enter_bl_ready">Firmware listo; entra en modo BL y vuelve a autorizar.</string>
+</resources>
